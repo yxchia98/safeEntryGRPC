@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package helloworld;
+
+service SafeEntry {
+    rpc CheckInIndividual (CheckInIndividualRequest) returns (CheckOutIndividualReply) {}
+    rpc CheckInGroup (CheckInGroupRequest) returns (CheckOutGroupReply) {}
+    rpc CheckOutIndividual (CheckOutIndividualRequest) returns (CheckOutIndividualReply) {}
+    rpc CheckOutGroup (CheckOutGroupRequest) returns (CheckOutGroupReply) {}
+
+}
+
+
+// requests 
+
+message CheckInIndividualRequest {
+    string name = 1;
+    string nric = 2;
+    string location = 3;
+    string time = 4;
+}
+
+message CheckInGroupRequest {
+    repeated string name = 1;
+    repeated string nric = 2;
+    string location = 3;
+    string time = 4;
+}
+
+message CheckOutIndividualRequest {
+    string name = 1;
+    string nric = 2;
+    string location = 3;
+    string time = 4;
+}
+
+message CheckOutGroupRequest {
+    repeated string name = 1;
+    repeated string nric = 2;
+    string location = 3;
+    string time = 4;
+}
+
+// replies
+
+message CheckInIndividualReply {
+    string status = 1;
+}
+
+message CheckInGroupReply {
+    string status = 1;
+}
+
+message CheckOutIndividualReply {
+    string status = 1;
+}
+
+message CheckOutGroupReply {
+    string status = 1;
+}
