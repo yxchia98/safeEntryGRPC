@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-package helloworld;
+package safe_entry;
 
 service SafeEntry {
     rpc CheckInIndividual (CheckInIndividualRequest) returns (CheckOutIndividualReply) {}
     rpc CheckInGroup (CheckInGroupRequest) returns (CheckOutGroupReply) {}
     rpc CheckOutIndividual (CheckOutIndividualRequest) returns (CheckOutIndividualReply) {}
     rpc CheckOutGroup (CheckOutGroupRequest) returns (CheckOutGroupReply) {}
-
+    rpc CheckInHistory (CheckInHistoryRequest) returns (CheckInHistoryReply) {}
 }
 
 
@@ -41,6 +41,10 @@ message CheckOutGroupRequest {
     string time = 4;
 }
 
+message CheckInHistoryRequest{
+    string nric = 1;
+}
+
 // replies
 
 message CheckInIndividualReply {
@@ -57,4 +61,15 @@ message CheckOutIndividualReply {
 
 message CheckOutGroupReply {
     string status = 1;
+}
+
+message CheckInHistoryReply{
+    repeated Result results = 1;
+}
+
+message Result{
+    string name = 1;
+    string nric = 2;
+    string location = 3;
+    string time = 4;
 }

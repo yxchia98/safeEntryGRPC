@@ -15,24 +15,29 @@ class SafeEntryStub(object):
             channel: A grpc.Channel.
         """
         self.CheckInIndividual = channel.unary_unary(
-                '/helloworld.SafeEntry/CheckInIndividual',
+                '/safe_entry.SafeEntry/CheckInIndividual',
                 request_serializer=safe__entry__pb2.CheckInIndividualRequest.SerializeToString,
                 response_deserializer=safe__entry__pb2.CheckOutIndividualReply.FromString,
                 )
         self.CheckInGroup = channel.unary_unary(
-                '/helloworld.SafeEntry/CheckInGroup',
+                '/safe_entry.SafeEntry/CheckInGroup',
                 request_serializer=safe__entry__pb2.CheckInGroupRequest.SerializeToString,
                 response_deserializer=safe__entry__pb2.CheckOutGroupReply.FromString,
                 )
         self.CheckOutIndividual = channel.unary_unary(
-                '/helloworld.SafeEntry/CheckOutIndividual',
+                '/safe_entry.SafeEntry/CheckOutIndividual',
                 request_serializer=safe__entry__pb2.CheckOutIndividualRequest.SerializeToString,
                 response_deserializer=safe__entry__pb2.CheckOutIndividualReply.FromString,
                 )
         self.CheckOutGroup = channel.unary_unary(
-                '/helloworld.SafeEntry/CheckOutGroup',
+                '/safe_entry.SafeEntry/CheckOutGroup',
                 request_serializer=safe__entry__pb2.CheckOutGroupRequest.SerializeToString,
                 response_deserializer=safe__entry__pb2.CheckOutGroupReply.FromString,
+                )
+        self.CheckInHistory = channel.unary_unary(
+                '/safe_entry.SafeEntry/CheckInHistory',
+                request_serializer=safe__entry__pb2.CheckInHistoryRequest.SerializeToString,
+                response_deserializer=safe__entry__pb2.CheckInHistoryReply.FromString,
                 )
 
 
@@ -63,6 +68,12 @@ class SafeEntryServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CheckInHistory(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_SafeEntryServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -86,9 +97,14 @@ def add_SafeEntryServicer_to_server(servicer, server):
                     request_deserializer=safe__entry__pb2.CheckOutGroupRequest.FromString,
                     response_serializer=safe__entry__pb2.CheckOutGroupReply.SerializeToString,
             ),
+            'CheckInHistory': grpc.unary_unary_rpc_method_handler(
+                    servicer.CheckInHistory,
+                    request_deserializer=safe__entry__pb2.CheckInHistoryRequest.FromString,
+                    response_serializer=safe__entry__pb2.CheckInHistoryReply.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'helloworld.SafeEntry', rpc_method_handlers)
+            'safe_entry.SafeEntry', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -107,7 +123,7 @@ class SafeEntry(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/helloworld.SafeEntry/CheckInIndividual',
+        return grpc.experimental.unary_unary(request, target, '/safe_entry.SafeEntry/CheckInIndividual',
             safe__entry__pb2.CheckInIndividualRequest.SerializeToString,
             safe__entry__pb2.CheckOutIndividualReply.FromString,
             options, channel_credentials,
@@ -124,7 +140,7 @@ class SafeEntry(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/helloworld.SafeEntry/CheckInGroup',
+        return grpc.experimental.unary_unary(request, target, '/safe_entry.SafeEntry/CheckInGroup',
             safe__entry__pb2.CheckInGroupRequest.SerializeToString,
             safe__entry__pb2.CheckOutGroupReply.FromString,
             options, channel_credentials,
@@ -141,7 +157,7 @@ class SafeEntry(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/helloworld.SafeEntry/CheckOutIndividual',
+        return grpc.experimental.unary_unary(request, target, '/safe_entry.SafeEntry/CheckOutIndividual',
             safe__entry__pb2.CheckOutIndividualRequest.SerializeToString,
             safe__entry__pb2.CheckOutIndividualReply.FromString,
             options, channel_credentials,
@@ -158,8 +174,25 @@ class SafeEntry(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/helloworld.SafeEntry/CheckOutGroup',
+        return grpc.experimental.unary_unary(request, target, '/safe_entry.SafeEntry/CheckOutGroup',
             safe__entry__pb2.CheckOutGroupRequest.SerializeToString,
             safe__entry__pb2.CheckOutGroupReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CheckInHistory(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/safe_entry.SafeEntry/CheckInHistory',
+            safe__entry__pb2.CheckInHistoryRequest.SerializeToString,
+            safe__entry__pb2.CheckInHistoryReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

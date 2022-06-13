@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10safe_entry.proto\x12\nhelloworld\"V\n\x18\x43heckInIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t\"Q\n\x13\x43heckInGroupRequest\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x0c\n\x04nric\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t\"W\n\x19\x43heckOutIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t\"R\n\x14\x43heckOutGroupRequest\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x0c\n\x04nric\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t\"(\n\x16\x43heckInIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"#\n\x11\x43heckInGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\")\n\x17\x43heckOutIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"$\n\x12\x43heckOutGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t2\xf9\x02\n\tSafeEntry\x12`\n\x11\x43heckInIndividual\x12$.helloworld.CheckInIndividualRequest\x1a#.helloworld.CheckOutIndividualReply\"\x00\x12Q\n\x0c\x43heckInGroup\x12\x1f.helloworld.CheckInGroupRequest\x1a\x1e.helloworld.CheckOutGroupReply\"\x00\x12\x62\n\x12\x43heckOutIndividual\x12%.helloworld.CheckOutIndividualRequest\x1a#.helloworld.CheckOutIndividualReply\"\x00\x12S\n\rCheckOutGroup\x12 .helloworld.CheckOutGroupRequest\x1a\x1e.helloworld.CheckOutGroupReply\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10safe_entry.proto\x12\nsafe_entry\"V\n\x18\x43heckInIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t\"Q\n\x13\x43heckInGroupRequest\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x0c\n\x04nric\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t\"W\n\x19\x43heckOutIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t\"R\n\x14\x43heckOutGroupRequest\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x0c\n\x04nric\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t\"%\n\x15\x43heckInHistoryRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"(\n\x16\x43heckInIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"#\n\x11\x43heckInGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\")\n\x17\x43heckOutIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"$\n\x12\x43heckOutGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\":\n\x13\x43heckInHistoryReply\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result\"D\n\x06Result\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t2\xd1\x03\n\tSafeEntry\x12`\n\x11\x43heckInIndividual\x12$.safe_entry.CheckInIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12Q\n\x0c\x43heckInGroup\x12\x1f.safe_entry.CheckInGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12\x62\n\x12\x43heckOutIndividual\x12%.safe_entry.CheckOutIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12S\n\rCheckOutGroup\x12 .safe_entry.CheckOutGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12V\n\x0e\x43heckInHistory\x12!.safe_entry.CheckInHistoryRequest\x1a\x1f.safe_entry.CheckInHistoryReply\"\x00\x62\x06proto3')
 
 
 
@@ -22,65 +22,89 @@ _CHECKININDIVIDUALREQUEST = DESCRIPTOR.message_types_by_name['CheckInIndividualR
 _CHECKINGROUPREQUEST = DESCRIPTOR.message_types_by_name['CheckInGroupRequest']
 _CHECKOUTINDIVIDUALREQUEST = DESCRIPTOR.message_types_by_name['CheckOutIndividualRequest']
 _CHECKOUTGROUPREQUEST = DESCRIPTOR.message_types_by_name['CheckOutGroupRequest']
+_CHECKINHISTORYREQUEST = DESCRIPTOR.message_types_by_name['CheckInHistoryRequest']
 _CHECKININDIVIDUALREPLY = DESCRIPTOR.message_types_by_name['CheckInIndividualReply']
 _CHECKINGROUPREPLY = DESCRIPTOR.message_types_by_name['CheckInGroupReply']
 _CHECKOUTINDIVIDUALREPLY = DESCRIPTOR.message_types_by_name['CheckOutIndividualReply']
 _CHECKOUTGROUPREPLY = DESCRIPTOR.message_types_by_name['CheckOutGroupReply']
+_CHECKINHISTORYREPLY = DESCRIPTOR.message_types_by_name['CheckInHistoryReply']
+_RESULT = DESCRIPTOR.message_types_by_name['Result']
 CheckInIndividualRequest = _reflection.GeneratedProtocolMessageType('CheckInIndividualRequest', (_message.Message,), {
   'DESCRIPTOR' : _CHECKININDIVIDUALREQUEST,
   '__module__' : 'safe_entry_pb2'
-  # @@protoc_insertion_point(class_scope:helloworld.CheckInIndividualRequest)
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckInIndividualRequest)
   })
 _sym_db.RegisterMessage(CheckInIndividualRequest)
 
 CheckInGroupRequest = _reflection.GeneratedProtocolMessageType('CheckInGroupRequest', (_message.Message,), {
   'DESCRIPTOR' : _CHECKINGROUPREQUEST,
   '__module__' : 'safe_entry_pb2'
-  # @@protoc_insertion_point(class_scope:helloworld.CheckInGroupRequest)
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckInGroupRequest)
   })
 _sym_db.RegisterMessage(CheckInGroupRequest)
 
 CheckOutIndividualRequest = _reflection.GeneratedProtocolMessageType('CheckOutIndividualRequest', (_message.Message,), {
   'DESCRIPTOR' : _CHECKOUTINDIVIDUALREQUEST,
   '__module__' : 'safe_entry_pb2'
-  # @@protoc_insertion_point(class_scope:helloworld.CheckOutIndividualRequest)
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckOutIndividualRequest)
   })
 _sym_db.RegisterMessage(CheckOutIndividualRequest)
 
 CheckOutGroupRequest = _reflection.GeneratedProtocolMessageType('CheckOutGroupRequest', (_message.Message,), {
   'DESCRIPTOR' : _CHECKOUTGROUPREQUEST,
   '__module__' : 'safe_entry_pb2'
-  # @@protoc_insertion_point(class_scope:helloworld.CheckOutGroupRequest)
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckOutGroupRequest)
   })
 _sym_db.RegisterMessage(CheckOutGroupRequest)
+
+CheckInHistoryRequest = _reflection.GeneratedProtocolMessageType('CheckInHistoryRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CHECKINHISTORYREQUEST,
+  '__module__' : 'safe_entry_pb2'
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckInHistoryRequest)
+  })
+_sym_db.RegisterMessage(CheckInHistoryRequest)
 
 CheckInIndividualReply = _reflection.GeneratedProtocolMessageType('CheckInIndividualReply', (_message.Message,), {
   'DESCRIPTOR' : _CHECKININDIVIDUALREPLY,
   '__module__' : 'safe_entry_pb2'
-  # @@protoc_insertion_point(class_scope:helloworld.CheckInIndividualReply)
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckInIndividualReply)
   })
 _sym_db.RegisterMessage(CheckInIndividualReply)
 
 CheckInGroupReply = _reflection.GeneratedProtocolMessageType('CheckInGroupReply', (_message.Message,), {
   'DESCRIPTOR' : _CHECKINGROUPREPLY,
   '__module__' : 'safe_entry_pb2'
-  # @@protoc_insertion_point(class_scope:helloworld.CheckInGroupReply)
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckInGroupReply)
   })
 _sym_db.RegisterMessage(CheckInGroupReply)
 
 CheckOutIndividualReply = _reflection.GeneratedProtocolMessageType('CheckOutIndividualReply', (_message.Message,), {
   'DESCRIPTOR' : _CHECKOUTINDIVIDUALREPLY,
   '__module__' : 'safe_entry_pb2'
-  # @@protoc_insertion_point(class_scope:helloworld.CheckOutIndividualReply)
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckOutIndividualReply)
   })
 _sym_db.RegisterMessage(CheckOutIndividualReply)
 
 CheckOutGroupReply = _reflection.GeneratedProtocolMessageType('CheckOutGroupReply', (_message.Message,), {
   'DESCRIPTOR' : _CHECKOUTGROUPREPLY,
   '__module__' : 'safe_entry_pb2'
-  # @@protoc_insertion_point(class_scope:helloworld.CheckOutGroupReply)
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckOutGroupReply)
   })
 _sym_db.RegisterMessage(CheckOutGroupReply)
+
+CheckInHistoryReply = _reflection.GeneratedProtocolMessageType('CheckInHistoryReply', (_message.Message,), {
+  'DESCRIPTOR' : _CHECKINHISTORYREPLY,
+  '__module__' : 'safe_entry_pb2'
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckInHistoryReply)
+  })
+_sym_db.RegisterMessage(CheckInHistoryReply)
+
+Result = _reflection.GeneratedProtocolMessageType('Result', (_message.Message,), {
+  'DESCRIPTOR' : _RESULT,
+  '__module__' : 'safe_entry_pb2'
+  # @@protoc_insertion_point(class_scope:safe_entry.Result)
+  })
+_sym_db.RegisterMessage(Result)
 
 _SAFEENTRY = DESCRIPTOR.services_by_name['SafeEntry']
 if _descriptor._USE_C_DESCRIPTORS == False:
@@ -94,14 +118,20 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _CHECKOUTINDIVIDUALREQUEST._serialized_end=290
   _CHECKOUTGROUPREQUEST._serialized_start=292
   _CHECKOUTGROUPREQUEST._serialized_end=374
-  _CHECKININDIVIDUALREPLY._serialized_start=376
-  _CHECKININDIVIDUALREPLY._serialized_end=416
-  _CHECKINGROUPREPLY._serialized_start=418
-  _CHECKINGROUPREPLY._serialized_end=453
-  _CHECKOUTINDIVIDUALREPLY._serialized_start=455
-  _CHECKOUTINDIVIDUALREPLY._serialized_end=496
-  _CHECKOUTGROUPREPLY._serialized_start=498
-  _CHECKOUTGROUPREPLY._serialized_end=534
-  _SAFEENTRY._serialized_start=537
-  _SAFEENTRY._serialized_end=914
+  _CHECKINHISTORYREQUEST._serialized_start=376
+  _CHECKINHISTORYREQUEST._serialized_end=413
+  _CHECKININDIVIDUALREPLY._serialized_start=415
+  _CHECKININDIVIDUALREPLY._serialized_end=455
+  _CHECKINGROUPREPLY._serialized_start=457
+  _CHECKINGROUPREPLY._serialized_end=492
+  _CHECKOUTINDIVIDUALREPLY._serialized_start=494
+  _CHECKOUTINDIVIDUALREPLY._serialized_end=535
+  _CHECKOUTGROUPREPLY._serialized_start=537
+  _CHECKOUTGROUPREPLY._serialized_end=573
+  _CHECKINHISTORYREPLY._serialized_start=575
+  _CHECKINHISTORYREPLY._serialized_end=633
+  _RESULT._serialized_start=635
+  _RESULT._serialized_end=703
+  _SAFEENTRY._serialized_start=706
+  _SAFEENTRY._serialized_end=1171
 # @@protoc_insertion_point(module_scope)

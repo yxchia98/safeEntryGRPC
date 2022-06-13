@@ -1,0 +1,5 @@
+grpc==1.0.0
+grpcio==1.46.3
+protobuf==4.21.1
+pymongo==4.1.1
+dnspython==2.2.1
