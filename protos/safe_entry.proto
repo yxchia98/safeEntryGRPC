@@ -9,6 +9,9 @@ service SafeEntry {
     rpc CheckOutGroup (CheckOutGroupRequest) returns (CheckOutGroupReply) {}
     rpc CheckInHistory (CheckInHistoryRequest) returns (CheckInHistoryReply) {}
 }
+service SpecialAccess {
+    rpc MarkCluster (MarkClusterRequest) returns (MarkClusterReply){}
+}
 
 
 // requests 
@@ -61,6 +64,16 @@ message CheckOutGroupReply {
 
 message CheckInHistoryReply{
     repeated Result results = 1;
+}
+
+message MarkClusterRequest{
+    string location = 1;
+    string date = 2;
+    string time = 3;
+}
+
+message MarkClusterReply{
+    string status = 1;
 }
 
 message Result{
