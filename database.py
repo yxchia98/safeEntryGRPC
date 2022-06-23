@@ -8,7 +8,7 @@ class MongoDatabase():
 
     def connect(self):
         self.client = MongoClient(
-            "mongodb+srv://<user>:<password>@secluster.25zbo.mongodb.net/?retryWrites=true&w=majority")
+            "mongodb+srv://adminuser:csc3004@secluster.25zbo.mongodb.net/?retryWrites=true&w=majority")
 
     def connect_database(self, dbname):
         return self.client[dbname]

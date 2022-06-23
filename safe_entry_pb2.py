@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10safe_entry.proto\x12\nsafe_entry\"V\n\x18\x43heckInIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t\"Q\n\x13\x43heckInGroupRequest\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x0c\n\x04nric\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t\"W\n\x19\x43heckOutIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t\"R\n\x14\x43heckOutGroupRequest\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x0c\n\x04nric\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t\"%\n\x15\x43heckInHistoryRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"(\n\x16\x43heckInIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"#\n\x11\x43heckInGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\")\n\x17\x43heckOutIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"$\n\x12\x43heckOutGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\":\n\x13\x43heckInHistoryReply\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result\"D\n\x06Result\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t2\xd1\x03\n\tSafeEntry\x12`\n\x11\x43heckInIndividual\x12$.safe_entry.CheckInIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12Q\n\x0c\x43heckInGroup\x12\x1f.safe_entry.CheckInGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12\x62\n\x12\x43heckOutIndividual\x12%.safe_entry.CheckOutIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12S\n\rCheckOutGroup\x12 .safe_entry.CheckOutGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12V\n\x0e\x43heckInHistory\x12!.safe_entry.CheckInHistoryRequest\x1a\x1f.safe_entry.CheckInHistoryReply\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10safe_entry.proto\x12\nsafe_entry\"H\n\x18\x43heckInIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"C\n\x13\x43heckInGroupRequest\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x0c\n\x04nric\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"I\n\x19\x43heckOutIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"D\n\x14\x43heckOutGroupRequest\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x0c\n\x04nric\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"%\n\x15\x43heckInHistoryRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"(\n\x16\x43heckInIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"#\n\x11\x43heckInGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\")\n\x17\x43heckOutIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"$\n\x12\x43heckOutGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\":\n\x13\x43heckInHistoryReply\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result\"D\n\x06Result\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x0c\n\x04time\x18\x04 \x01(\t2\xd1\x03\n\tSafeEntry\x12`\n\x11\x43heckInIndividual\x12$.safe_entry.CheckInIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12Q\n\x0c\x43heckInGroup\x12\x1f.safe_entry.CheckInGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12\x62\n\x12\x43heckOutIndividual\x12%.safe_entry.CheckOutIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12S\n\rCheckOutGroup\x12 .safe_entry.CheckOutGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12V\n\x0e\x43heckInHistory\x12!.safe_entry.CheckInHistoryRequest\x1a\x1f.safe_entry.CheckInHistoryReply\"\x00\x62\x06proto3')
 
 
 
@@ -111,27 +111,27 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   _CHECKININDIVIDUALREQUEST._serialized_start=32
-  _CHECKININDIVIDUALREQUEST._serialized_end=118
-  _CHECKINGROUPREQUEST._serialized_start=120
-  _CHECKINGROUPREQUEST._serialized_end=201
-  _CHECKOUTINDIVIDUALREQUEST._serialized_start=203
-  _CHECKOUTINDIVIDUALREQUEST._serialized_end=290
-  _CHECKOUTGROUPREQUEST._serialized_start=292
-  _CHECKOUTGROUPREQUEST._serialized_end=374
-  _CHECKINHISTORYREQUEST._serialized_start=376
-  _CHECKINHISTORYREQUEST._serialized_end=413
-  _CHECKININDIVIDUALREPLY._serialized_start=415
-  _CHECKININDIVIDUALREPLY._serialized_end=455
-  _CHECKINGROUPREPLY._serialized_start=457
-  _CHECKINGROUPREPLY._serialized_end=492
-  _CHECKOUTINDIVIDUALREPLY._serialized_start=494
-  _CHECKOUTINDIVIDUALREPLY._serialized_end=535
-  _CHECKOUTGROUPREPLY._serialized_start=537
-  _CHECKOUTGROUPREPLY._serialized_end=573
-  _CHECKINHISTORYREPLY._serialized_start=575
-  _CHECKINHISTORYREPLY._serialized_end=633
-  _RESULT._serialized_start=635
-  _RESULT._serialized_end=703
-  _SAFEENTRY._serialized_start=706
-  _SAFEENTRY._serialized_end=1171
+  _CHECKININDIVIDUALREQUEST._serialized_end=104
+  _CHECKINGROUPREQUEST._serialized_start=106
+  _CHECKINGROUPREQUEST._serialized_end=173
+  _CHECKOUTINDIVIDUALREQUEST._serialized_start=175
+  _CHECKOUTINDIVIDUALREQUEST._serialized_end=248
+  _CHECKOUTGROUPREQUEST._serialized_start=250
+  _CHECKOUTGROUPREQUEST._serialized_end=318
+  _CHECKINHISTORYREQUEST._serialized_start=320
+  _CHECKINHISTORYREQUEST._serialized_end=357
+  _CHECKININDIVIDUALREPLY._serialized_start=359
+  _CHECKININDIVIDUALREPLY._serialized_end=399
+  _CHECKINGROUPREPLY._serialized_start=401
+  _CHECKINGROUPREPLY._serialized_end=436
+  _CHECKOUTINDIVIDUALREPLY._serialized_start=438
+  _CHECKOUTINDIVIDUALREPLY._serialized_end=479
+  _CHECKOUTGROUPREPLY._serialized_start=481
+  _CHECKOUTGROUPREPLY._serialized_end=517
+  _CHECKINHISTORYREPLY._serialized_start=519
+  _CHECKINHISTORYREPLY._serialized_end=577
+  _RESULT._serialized_start=579
+  _RESULT._serialized_end=647
+  _SAFEENTRY._serialized_start=650
+  _SAFEENTRY._serialized_end=1115
 # @@protoc_insertion_point(module_scope)

@@ -17,28 +17,24 @@ message CheckInIndividualRequest {
     string name = 1;
     string nric = 2;
     string location = 3;
-    string time = 4;
 }
 
 message CheckInGroupRequest {
     repeated string name = 1;
     repeated string nric = 2;
     string location = 3;
-    string time = 4;
 }
 
 message CheckOutIndividualRequest {
     string name = 1;
     string nric = 2;
     string location = 3;
-    string time = 4;
 }
 
 message CheckOutGroupRequest {
     repeated string name = 1;
     repeated string nric = 2;
     string location = 3;
-    string time = 4;
 }
 
 message CheckInHistoryRequest{

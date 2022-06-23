@@ -13,28 +13,26 @@ async def run() -> None:
 
         response = await stub.CheckInGroup(
             safe_entry_pb2.CheckInGroupRequest(
-                name=["this", "is", "a", "test"])
+                name=["name1", "name2", "name3", "name4"])
         )
 
         response = await stub.CheckInIndividual(
             safe_entry_pb2.CheckInIndividualRequest(
                 name='Yi Xuan',
                 nric='S9273612E',
-                location='northpoint',
-                time='testtime')
+                location='northpoint',)
         )
     print("received: " + response.status)
 
 
-async def checkInIndividual(name: str, nric: str, location: str, time: str):
+async def checkInIndividual(name: str, nric: str, location: str):
     async with grpc.aio.insecure_channel("localhost:50051") as channel:
         stub = safe_entry_pb2_grpc.SafeEntryStub(channel)
         response = await stub.CheckInIndividual(
             safe_entry_pb2.CheckInIndividualRequest(
                 name=name,
                 nric=nric,
-                location=location,
-                time=time)
+                location=location)
         )
         print(response)
 
@@ -66,8 +64,8 @@ async def checkInHistory(nric):
 if __name__ == "__main__":
     logging.basicConfig()
     # asyncio.run(run())
-    # asyncio.run(checkInIndividual(name='Yi Xuan', nric='S9273612E',
-    #             location='northpoint', time='testtime'))
+    asyncio.run(checkInIndividual(name='Yi Xuan', nric='S9273612E',
+                location='northpoint'))
     # asyncio.run(checkInGroup(name=['brandon', 'yixuan', 'justin', 'jinming'], nric=[
     #             'S82746718D', 'S9283710H', 'S82716222C', 'S9125829A'], location='tampines', time='timestring'))
-    asyncio.run(checkInHistory(nric='S9273612E'))
+    # asyncio.run(checkInHistory(nric='S9273612E'))
