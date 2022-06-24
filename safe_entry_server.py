@@ -25,14 +25,31 @@ class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
             "checkOutTime": None,
         }
         inserted_record = records.insert_one(record)
-        print(inserted_record.inserted_id)
-        print(request)
+        print('Check-in acknowledgement for', request.name, request.nric,
+              'at', request.location, time, '=', inserted_record.acknowledged)
         return safe_entry_pb2.CheckInIndividualReply(status="complete!")
+
+    async def CheckOutIndividual(self, request: safe_entry_pb2.CheckOutIndividualRequest, context: grpc.aio.ServicerContext) -> safe_entry_pb2.CheckOutIndividualReply:
+        time = datetime.now()
+        db = self.mongoDB.connect_database('safe-entry')
+        records = db['records']
+        query = {'name': request.name,
+                 'nric': request.nric,
+                 'location': request.location,
+                 'checkOutTime': None}
+        updateQuery = {'$set': {'checkOutTime': time}}
+        updated_records = records.update_many(query, updateQuery)
+        print('Check-out acknowledgement for', request.name, request.nric,
+              'at', request.location, time, '=', updated_records.acknowledged)
+        return safe_entry_pb2.CheckOutIndividualReply(status="complete!")
 
     async def CheckInGroup(self, request: safe_entry_pb2.CheckInGroupRequest, context: grpc.aio.ServicerContext) -> safe_entry_pb2.CheckInGroupReply:
         time = datetime.now()
         names = list(request.names)
         nrics = list(request.nrics)
+        db = self.mongoDB.connect_database('safe-entry')
+        records = db['records']
+        checkInList = []
         for i in range(0, len(nrics)):
             record = {
                 "name": names[i],
@@ -41,17 +58,39 @@ class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
                 "checkInTime": time,
                 "checkOutTime": None,
             }
-            print(record)
+            checkInList.append(record)
+        inserted_records = records.insert_many(checkInList)
+        print('Check-in acknowledgement for', names, nrics,
+              'at', request.location, time, '=', inserted_records.acknowledged)
         return safe_entry_pb2.CheckInGroupReply(status="complete!")
+
+    async def CheckOutGroup(self, request: safe_entry_pb2.CheckOutGroupRequest, context: grpc.aio.ServicerContext) -> safe_entry_pb2.CheckOutGroupReply:
+        time = datetime.now()
+        names = list(request.names)
+        nrics = list(request.nrics)
+        db = self.mongoDB.connect_database('safe-entry')
+        records = db['records']
+        query = {
+            'name': {'$in': names},
+            'nric': {'$in': nrics},
+            'location': request.location,
+            'checkOutTime': None
+        }
+        updateQuery = {'$set': {'checkOutTime': time}}
+        updated_records = records.update_many(query, updateQuery)
+        print('Check-out acknowledgement for', names, nrics,
+              'at', request.location, time, '=', updated_records.acknowledged)
+        return safe_entry_pb2.CheckOutGroupReply(status="complete!")
 
     async def CheckInHistory(self, request: safe_entry_pb2.CheckInHistoryRequest, context: grpc.aio.ServicerContext) -> safe_entry_pb2.CheckInHistoryReply:
         formatted_results = []
         db = self.mongoDB.connect_database('safe-entry')
         records = db['records']
-        results = records.find({"nric": request.nric}, {"id": 0})
+        results = records.find({"nric": request.nric}, {"_id": 0})
         for i in results:
+            i['checkInTime'] = i['checkInTime'].isoformat()
+            i['checkOutTime'] = i['checkOutTime'].isoformat()
             formatted_results.append(i)
-        # formatted_results = json.dumps(formatted_results, default = lambda x: x.__dict__)
         print(formatted_results)
         return safe_entry_pb2.CheckInHistoryReply(results=formatted_results)
 

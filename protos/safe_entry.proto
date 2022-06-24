@@ -80,5 +80,6 @@ message Result{
     string name = 1;
     string nric = 2;
     string location = 3;
-    string time = 4;
+    string checkInTime = 4;
+    string checkOutTime = 5;
 }
