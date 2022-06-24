@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10safe_entry.proto\x12\nsafe_entry\"H\n\x18\x43heckInIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"E\n\x13\x43heckInGroupRequest\x12\r\n\x05names\x18\x01 \x03(\t\x12\r\n\x05nrics\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"I\n\x19\x43heckOutIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"F\n\x14\x43heckOutGroupRequest\x12\r\n\x05names\x18\x01 \x03(\t\x12\r\n\x05nrics\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"%\n\x15\x43heckInHistoryRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"(\n\x16\x43heckInIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"#\n\x11\x43heckInGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\")\n\x17\x43heckOutIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"$\n\x12\x43heckOutGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\":\n\x13\x43heckInHistoryReply\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result\"B\n\x12MarkClusterRequest\x12\x10\n\x08location\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x02 \x01(\t\x12\x0c\n\x04time\x18\x03 \x01(\t\"\"\n\x10MarkClusterReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"w\n\x06Result\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x13\n\x0b\x63heckInTime\x18\x04 \x01(\t\x12\x14\n\x0c\x63heckOutTime\x18\x05 \x01(\t\x12\x14\n\x0c\x63loseContact\x18\x06 \x01(\x08\"1\n\x13NotificationRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\";\n\x14NotificationResponse\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result2\xd1\x03\n\tSafeEntry\x12`\n\x11\x43heckInIndividual\x12$.safe_entry.CheckInIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12Q\n\x0c\x43heckInGroup\x12\x1f.safe_entry.CheckInGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12\x62\n\x12\x43heckOutIndividual\x12%.safe_entry.CheckOutIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12S\n\rCheckOutGroup\x12 .safe_entry.CheckOutGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12V\n\x0e\x43heckInHistory\x12!.safe_entry.CheckInHistoryRequest\x1a\x1f.safe_entry.CheckInHistoryReply\"\x00\x32^\n\rSpecialAccess\x12M\n\x0bMarkCluster\x12\x1e.safe_entry.MarkClusterRequest\x1a\x1c.safe_entry.MarkClusterReply\"\x00\x32n\n\x0cNotification\x12^\n\x15SubscribeNotification\x12\x1f.safe_entry.NotificationRequest\x1a .safe_entry.NotificationResponse\"\x00\x30\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10safe_entry.proto\x12\nsafe_entry\"H\n\x18\x43heckInIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"E\n\x13\x43heckInGroupRequest\x12\r\n\x05names\x18\x01 \x03(\t\x12\r\n\x05nrics\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"I\n\x19\x43heckOutIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"F\n\x14\x43heckOutGroupRequest\x12\r\n\x05names\x18\x01 \x03(\t\x12\r\n\x05nrics\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"%\n\x15\x43heckInHistoryRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"(\n\x18\x43heckCloseContactRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"(\n\x16\x43heckInIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"#\n\x11\x43heckInGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\")\n\x17\x43heckOutIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"$\n\x12\x43heckOutGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\":\n\x13\x43heckInHistoryReply\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result\"B\n\x12MarkClusterRequest\x12\x10\n\x08location\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x02 \x01(\t\x12\x0c\n\x04time\x18\x03 \x01(\t\"\"\n\x10MarkClusterReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"=\n\x16\x43heckCloseContactReply\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result\"w\n\x06Result\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x13\n\x0b\x63heckInTime\x18\x04 \x01(\t\x12\x14\n\x0c\x63heckOutTime\x18\x05 \x01(\t\x12\x14\n\x0c\x63loseContact\x18\x06 \x01(\x08\"1\n\x13NotificationRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\";\n\x14NotificationResponse\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result2\xb2\x04\n\tSafeEntry\x12`\n\x11\x43heckInIndividual\x12$.safe_entry.CheckInIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12Q\n\x0c\x43heckInGroup\x12\x1f.safe_entry.CheckInGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12\x62\n\x12\x43heckOutIndividual\x12%.safe_entry.CheckOutIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12S\n\rCheckOutGroup\x12 .safe_entry.CheckOutGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12V\n\x0e\x43heckInHistory\x12!.safe_entry.CheckInHistoryRequest\x1a\x1f.safe_entry.CheckInHistoryReply\"\x00\x12_\n\x11\x43heckCloseContact\x12$.safe_entry.CheckCloseContactRequest\x1a\".safe_entry.CheckCloseContactReply\"\x00\x32^\n\rSpecialAccess\x12M\n\x0bMarkCluster\x12\x1e.safe_entry.MarkClusterRequest\x1a\x1c.safe_entry.MarkClusterReply\"\x00\x32n\n\x0cNotification\x12^\n\x15SubscribeNotification\x12\x1f.safe_entry.NotificationRequest\x1a .safe_entry.NotificationResponse\"\x00\x30\x01\x62\x06proto3')
 
 
 
@@ -170,30 +170,34 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _CHECKOUTGROUPREQUEST._serialized_end=322
   _CHECKINHISTORYREQUEST._serialized_start=324
   _CHECKINHISTORYREQUEST._serialized_end=361
-  _CHECKININDIVIDUALREPLY._serialized_start=363
-  _CHECKININDIVIDUALREPLY._serialized_end=403
-  _CHECKINGROUPREPLY._serialized_start=405
-  _CHECKINGROUPREPLY._serialized_end=440
-  _CHECKOUTINDIVIDUALREPLY._serialized_start=442
-  _CHECKOUTINDIVIDUALREPLY._serialized_end=483
-  _CHECKOUTGROUPREPLY._serialized_start=485
-  _CHECKOUTGROUPREPLY._serialized_end=521
-  _CHECKINHISTORYREPLY._serialized_start=523
-  _CHECKINHISTORYREPLY._serialized_end=581
-  _MARKCLUSTERREQUEST._serialized_start=583
-  _MARKCLUSTERREQUEST._serialized_end=649
-  _MARKCLUSTERREPLY._serialized_start=651
-  _MARKCLUSTERREPLY._serialized_end=685
-  _RESULT._serialized_start=687
-  _RESULT._serialized_end=806
-  _NOTIFICATIONREQUEST._serialized_start=808
-  _NOTIFICATIONREQUEST._serialized_end=857
-  _NOTIFICATIONRESPONSE._serialized_start=859
-  _NOTIFICATIONRESPONSE._serialized_end=918
-  _SAFEENTRY._serialized_start=921
-  _SAFEENTRY._serialized_end=1386
-  _SPECIALACCESS._serialized_start=1388
-  _SPECIALACCESS._serialized_end=1482
-  _NOTIFICATION._serialized_start=1484
-  _NOTIFICATION._serialized_end=1594
+  _CHECKCLOSECONTACTREQUEST._serialized_start=363
+  _CHECKCLOSECONTACTREQUEST._serialized_end=403
+  _CHECKININDIVIDUALREPLY._serialized_start=405
+  _CHECKININDIVIDUALREPLY._serialized_end=445
+  _CHECKINGROUPREPLY._serialized_start=447
+  _CHECKINGROUPREPLY._serialized_end=482
+  _CHECKOUTINDIVIDUALREPLY._serialized_start=484
+  _CHECKOUTINDIVIDUALREPLY._serialized_end=525
+  _CHECKOUTGROUPREPLY._serialized_start=527
+  _CHECKOUTGROUPREPLY._serialized_end=563
+  _CHECKINHISTORYREPLY._serialized_start=565
+  _CHECKINHISTORYREPLY._serialized_end=623
+  _MARKCLUSTERREQUEST._serialized_start=625
+  _MARKCLUSTERREQUEST._serialized_end=691
+  _MARKCLUSTERREPLY._serialized_start=693
+  _MARKCLUSTERREPLY._serialized_end=727
+  _CHECKCLOSECONTACTREPLY._serialized_start=729
+  _CHECKCLOSECONTACTREPLY._serialized_end=790
+  _RESULT._serialized_start=792
+  _RESULT._serialized_end=911
+  _NOTIFICATIONREQUEST._serialized_start=913
+  _NOTIFICATIONREQUEST._serialized_end=962
+  _NOTIFICATIONRESPONSE._serialized_start=964
+  _NOTIFICATIONRESPONSE._serialized_end=1023
+  _SAFEENTRY._serialized_start=1026
+  _SAFEENTRY._serialized_end=1588
+  _SPECIALACCESS._serialized_start=1590
+  _SPECIALACCESS._serialized_end=1684
+  _NOTIFICATION._serialized_start=1686
+  _NOTIFICATION._serialized_end=1796
 # @@protoc_insertion_point(module_scope)
