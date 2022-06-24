@@ -43,9 +43,7 @@ async def checkInGroup(name: list[str], nric: list[str], location: str):
             safe_entry_pb2.CheckInGroupRequest(
                 name=name,
                 nric=nric,
-                location=location,
-                time=time
-            )
+                location=location)
         )
         print(response)
 
