@@ -4,7 +4,6 @@ import logging
 import grpc
 import safe_entry_pb2
 import safe_entry_pb2_grpc
-import json
 
 
 async def run() -> None:
