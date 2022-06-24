@@ -127,6 +127,31 @@ class SpecialAccess(safe_entry_pb2_grpc.SpecialAccessServicer):
               '=', inserted_record.acknowledged)
         return safe_entry_pb2.MarkClusterReply(status="complete!")
 
+def populate() -> None:
+
+    names = ['Chua Yi Xuan', 'Ooi Jun Kai', 'Lim Jun Xian', 'Brandon Ong', 'Low Kai Heng']
+    nric = ['S1234567A', 'S1234567B', 'S1234567C', 'S1234567D', 'S1234567E', 'S1234567F']
+    locations = ['AMK Hub', 'Hai Di Lao', 'Yakiniku', 'Saizerya', 'Woodlands MRT', 'SIT @ NYP', 'Yio Chu Kang MRT']
+
+    time = datetime.now()
+    mongoDB = MongoDatabase()
+    mongoDB.connect()
+    db = mongoDB.connect_database('safe-entry')
+    records = db['records']
+    count = 0
+
+    for i in names:
+        for j in locations:
+            record_template = {
+                "name": i,
+                "nric": nric[count],
+                "location": j,
+                "checkInTime": time,
+                "checkOutTime": None,
+                'closeContact': False,
+            }
+            records.insert_one(record_template)
+        count += 1
 
 async def serve() -> None:
     server = grpc.aio.server()
@@ -141,5 +166,6 @@ async def serve() -> None:
 
 
 if __name__ == "__main__":
+    populate()
     logging.basicConfig()
     asyncio.run(serve())
