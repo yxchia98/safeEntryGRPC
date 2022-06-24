@@ -82,4 +82,5 @@ message Result{
     string location = 3;
     string checkInTime = 4;
     string checkOutTime = 5;
+    bool closeContact = 6;
 }

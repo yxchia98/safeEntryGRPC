@@ -80,6 +80,7 @@ async def checkInHistory(nric):
                 nric=nric)
         )
         for i in response.results:
+            # closeContact wont show if false, only shows if true
             print(i)
 
 if __name__ == "__main__":
