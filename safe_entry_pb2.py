@@ -23,6 +23,7 @@ _CHECKINGROUPREQUEST = DESCRIPTOR.message_types_by_name['CheckInGroupRequest']
 _CHECKOUTINDIVIDUALREQUEST = DESCRIPTOR.message_types_by_name['CheckOutIndividualRequest']
 _CHECKOUTGROUPREQUEST = DESCRIPTOR.message_types_by_name['CheckOutGroupRequest']
 _CHECKINHISTORYREQUEST = DESCRIPTOR.message_types_by_name['CheckInHistoryRequest']
+_CHECKCLOSECONTACTREQUEST = DESCRIPTOR.message_types_by_name['CheckCloseContactRequest']
 _CHECKININDIVIDUALREPLY = DESCRIPTOR.message_types_by_name['CheckInIndividualReply']
 _CHECKINGROUPREPLY = DESCRIPTOR.message_types_by_name['CheckInGroupReply']
 _CHECKOUTINDIVIDUALREPLY = DESCRIPTOR.message_types_by_name['CheckOutIndividualReply']
@@ -30,6 +31,7 @@ _CHECKOUTGROUPREPLY = DESCRIPTOR.message_types_by_name['CheckOutGroupReply']
 _CHECKINHISTORYREPLY = DESCRIPTOR.message_types_by_name['CheckInHistoryReply']
 _MARKCLUSTERREQUEST = DESCRIPTOR.message_types_by_name['MarkClusterRequest']
 _MARKCLUSTERREPLY = DESCRIPTOR.message_types_by_name['MarkClusterReply']
+_CHECKCLOSECONTACTREPLY = DESCRIPTOR.message_types_by_name['CheckCloseContactReply']
 _RESULT = DESCRIPTOR.message_types_by_name['Result']
 _NOTIFICATIONREQUEST = DESCRIPTOR.message_types_by_name['NotificationRequest']
 _NOTIFICATIONRESPONSE = DESCRIPTOR.message_types_by_name['NotificationResponse']
@@ -67,6 +69,13 @@ CheckInHistoryRequest = _reflection.GeneratedProtocolMessageType('CheckInHistory
   # @@protoc_insertion_point(class_scope:safe_entry.CheckInHistoryRequest)
   })
 _sym_db.RegisterMessage(CheckInHistoryRequest)
+
+CheckCloseContactRequest = _reflection.GeneratedProtocolMessageType('CheckCloseContactRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CHECKCLOSECONTACTREQUEST,
+  '__module__' : 'safe_entry_pb2'
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckCloseContactRequest)
+  })
+_sym_db.RegisterMessage(CheckCloseContactRequest)
 
 CheckInIndividualReply = _reflection.GeneratedProtocolMessageType('CheckInIndividualReply', (_message.Message,), {
   'DESCRIPTOR' : _CHECKININDIVIDUALREPLY,
@@ -116,6 +125,13 @@ MarkClusterReply = _reflection.GeneratedProtocolMessageType('MarkClusterReply', 
   # @@protoc_insertion_point(class_scope:safe_entry.MarkClusterReply)
   })
 _sym_db.RegisterMessage(MarkClusterReply)
+
+CheckCloseContactReply = _reflection.GeneratedProtocolMessageType('CheckCloseContactReply', (_message.Message,), {
+  'DESCRIPTOR' : _CHECKCLOSECONTACTREPLY,
+  '__module__' : 'safe_entry_pb2'
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckCloseContactReply)
+  })
+_sym_db.RegisterMessage(CheckCloseContactReply)
 
 Result = _reflection.GeneratedProtocolMessageType('Result', (_message.Message,), {
   'DESCRIPTOR' : _RESULT,

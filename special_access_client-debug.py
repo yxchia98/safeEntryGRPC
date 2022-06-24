@@ -19,7 +19,7 @@ async def markCluster(location: str, date: str, time: str):
 
 if __name__ == "__main__":
     logging.basicConfig()
-    location = 'ION Orchard'
-    date = '20/06/2021'
+    location = 'AMK Hub'
+    date = '30/06/2022'
     time = '15:30'
     asyncio.run(markCluster(location=location, date=date, time=time))
