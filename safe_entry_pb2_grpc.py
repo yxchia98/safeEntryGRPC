@@ -290,3 +290,64 @@ class SpecialAccess(object):
             safe__entry__pb2.MarkClusterReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class NotificationStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.SubscribeNotification = channel.unary_stream(
+                '/safe_entry.Notification/SubscribeNotification',
+                request_serializer=safe__entry__pb2.NotificationRequest.SerializeToString,
+                response_deserializer=safe__entry__pb2.NotificationResponse.FromString,
+                )
+
+
+class NotificationServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def SubscribeNotification(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_NotificationServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'SubscribeNotification': grpc.unary_stream_rpc_method_handler(
+                    servicer.SubscribeNotification,
+                    request_deserializer=safe__entry__pb2.NotificationRequest.FromString,
+                    response_serializer=safe__entry__pb2.NotificationResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'safe_entry.Notification', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class Notification(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def SubscribeNotification(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/safe_entry.Notification/SubscribeNotification',
+            safe__entry__pb2.NotificationRequest.SerializeToString,
+            safe__entry__pb2.NotificationResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

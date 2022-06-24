@@ -103,9 +103,8 @@ class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
         results = records.find({"nric": request.nric}, {"_id": 0})
         for i in results:
             i['checkInTime'] = i['checkInTime'].isoformat()
-            
-            if i['checkOutTime']:
-                i['checkOutTime'] = i['checkOutTime'].isoformat()
+            i['checkOutTime'] = i['checkOutTime'].isoformat(
+            ) if i['checkOutTime'] else ''
             formatted_results.append(i)
         print(formatted_results)
         return safe_entry_pb2.CheckInHistoryReply(results=formatted_results)
@@ -176,11 +175,37 @@ def populate() -> None:
             count += 1
     
 
+class Notification(safe_entry_pb2_grpc.NotificationServicer):
+    mongoDB = MongoDatabase()
+    mongoDB.connect()
+
+    async def SubscribeNotification(self, request: safe_entry_pb2.NotificationRequest, context) -> safe_entry_pb2.NotificationResponse:
+        # infinite while loop
+        while(True):
+            # test server-sided streaming, will send dummy notification every 1 sec
+            print('sending notification')
+            formatted_record = []
+            await asyncio.sleep(1)
+            record = {
+                'name': request.name,
+                'nric': request.nric,
+                'location': 'location',
+                'checkInTime': 'testCheckInTime',
+                'checkOutTime': 'testCheckOutTime',
+                'closeContact': True
+            }
+            formatted_record.append(record)
+            # send to stream response
+            yield safe_entry_pb2.NotificationResponse(results=formatted_record)
+
+
 async def serve() -> None:
     server = grpc.aio.server()
     safe_entry_pb2_grpc.add_SafeEntryServicer_to_server(SafeEntry(), server)
     safe_entry_pb2_grpc.add_SpecialAccessServicer_to_server(
         SpecialAccess(), server)
+    safe_entry_pb2_grpc.add_NotificationServicer_to_server(
+        Notification(), server)
     listen_addr = "[::]:50051"
     server.add_insecure_port(listen_addr)
     logging.info("Starting server on %s", listen_addr)
