@@ -36,13 +36,13 @@ async def checkInIndividual(name: str, nric: str, location: str):
         print(response)
 
 
-async def checkInGroup(name: list[str], nric: list[str], location: str):
+async def checkInGroup(names: list[str], nrics: list[str], location: str):
     async with grpc.aio.insecure_channel("localhost:50051") as channel:
         stub = safe_entry_pb2_grpc.SafeEntryStub(channel)
         response = await stub.CheckInGroup(
             safe_entry_pb2.CheckInGroupRequest(
-                name=name,
-                nric=nric,
+                names=names,
+                nrics=nrics,
                 location=location)
         )
         print(response)
@@ -66,6 +66,6 @@ if __name__ == "__main__":
     # asyncio.run(run())
     # asyncio.run(checkInIndividual(name='Yi Xuan', nric='S9273612E',
     #             location='northpoint'))
-    asyncio.run(checkInGroup(name=groupnames,
-                nric=groupnrics, location=location))
+    asyncio.run(checkInGroup(names=groupnames,
+                nrics=groupnrics, location=location))
     # asyncio.run(checkInHistory(nric='S9273612E'))

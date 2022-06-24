@@ -23,8 +23,8 @@ message CheckInIndividualRequest {
 }
 
 message CheckInGroupRequest {
-    repeated string name = 1;
-    repeated string nric = 2;
+    repeated string names = 1;
+    repeated string nrics = 2;
     string location = 3;
 }
 
@@ -35,8 +35,8 @@ message CheckOutIndividualRequest {
 }
 
 message CheckOutGroupRequest {
-    repeated string name = 1;
-    repeated string nric = 2;
+    repeated string names = 1;
+    repeated string nrics = 2;
     string location = 3;
 }
 

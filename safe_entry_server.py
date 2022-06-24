@@ -31,10 +31,12 @@ class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
 
     async def CheckInGroup(self, request: safe_entry_pb2.CheckInGroupRequest, context: grpc.aio.ServicerContext) -> safe_entry_pb2.CheckInGroupReply:
         time = datetime.now()
-        for i in range(0, request.nric.length):
+        names = list(request.names)
+        nrics = list(request.nrics)
+        for i in range(0, len(nrics)):
             record = {
-                "name": request.name[i],
-                "nric": request.nric[i],
+                "name": names[i],
+                "nric": nrics[i],
                 "location": request.location,
                 "checkInTime": time,
                 "checkOutTime": None,
