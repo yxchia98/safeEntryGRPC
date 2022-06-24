@@ -88,8 +88,8 @@ if __name__ == "__main__":
     groupnames = ['name1', 'name2', 'name3', 'name4']
     groupnrics = ['nric1', 'nric2', 'nric3', 'nric4']
     location = 'AMK Hub'
-    name = 'name4'
-    nric = 'nric4'
+    name = 'name3'
+    nric = 'nric3'
     # asyncio.run(run())
     # asyncio.run(checkInIndividual(name=name, nric=nric,
     #             location=location))
