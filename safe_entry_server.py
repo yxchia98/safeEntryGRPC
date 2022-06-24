@@ -1,13 +1,15 @@
 import asyncio
 import logging
+from dateutil import parser
 from sqlite3 import Date
 from tokenize import Special
 
 import grpc
+from numpy import record
 import safe_entry_pb2
 import safe_entry_pb2_grpc
 from database import MongoDatabase
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
@@ -117,14 +119,28 @@ class SpecialAccess(safe_entry_pb2_grpc.SpecialAccessServicer):
         time = datetime.strptime(
             ' '.join([request.date, request.time]), '%d/%m/%Y %H:%M')
         db = self.mongoDB.connect_database('safe-entry')
-        records = db['clusters']
-        record = {
+        clusters_collection = db['clusters']
+        cluster_document = {
             "location": request.location,
             "time": time
         }
-        inserted_record = records.insert_one(record)
+        inserted_document = clusters_collection.insert_one(cluster_document)
         print('New cluster acknowledgement at', request.location, time,
-              '=', inserted_record.acknowledged)
+              '=', inserted_document.acknowledged)
+
+        epoch_time = time.timestamp()
+        epoch_delta_time = (time - timedelta(days=14)).timestamp()
+
+        records_collection = db['records']
+        location_documents = records_collection.find({"location": request.location})
+        for doc in location_documents:
+            print(parser.parse(doc['checkInTime'].isoformat()).timestamp())
+            epoch_visit_time = parser.parse(doc['checkInTime'].isoformat()).timestamp()
+            if epoch_delta_time <= epoch_visit_time <= epoch_time:
+                print("CONTACT CONTACT CONTACT!")
+                doc['closeContact'] = True
+                records_collection.replace_one({"_id": doc["_id"]}, doc)
+
         return safe_entry_pb2.MarkClusterReply(status="complete!")
 
 def populate() -> None:
@@ -138,20 +154,27 @@ def populate() -> None:
     mongoDB.connect()
     db = mongoDB.connect_database('safe-entry')
     records = db['records']
-    count = 0
 
-    for i in names:
-        for j in locations:
-            record_template = {
-                "name": i,
-                "nric": nric[count],
-                "location": j,
-                "checkInTime": time,
-                "checkOutTime": None,
-                'closeContact': False,
-            }
-            records.insert_one(record_template)
-        count += 1
+    db_count = records.count_documents({})
+
+    if db_count == 0:
+
+        print("Empty records table - populating with some data")
+        count = 0
+
+        for i in names:
+            for j in locations:
+                record_template = {
+                    "name": i,
+                    "nric": nric[count],
+                    "location": j,
+                    "checkInTime": time,
+                    "checkOutTime": None,
+                    'closeContact': False,
+                }
+                records.insert_one(record_template)
+            count += 1
+    
 
 async def serve() -> None:
     server = grpc.aio.server()

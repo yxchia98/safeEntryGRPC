@@ -8,7 +8,9 @@ service SafeEntry {
     rpc CheckOutIndividual (CheckOutIndividualRequest) returns (CheckOutIndividualReply) {}
     rpc CheckOutGroup (CheckOutGroupRequest) returns (CheckOutGroupReply) {}
     rpc CheckInHistory (CheckInHistoryRequest) returns (CheckInHistoryReply) {}
+    rpc CheckCloseContact (CheckCloseContactRequest) returns (CheckCloseContactReply) {}
 }
+
 service SpecialAccess {
     rpc MarkCluster (MarkClusterRequest) returns (MarkClusterReply){}
 }
@@ -44,6 +46,10 @@ message CheckInHistoryRequest{
     string nric = 1;
 }
 
+message CheckCloseContactRequest{
+    string nric = 1;
+}
+
 // replies
 
 message CheckInIndividualReply {
@@ -74,6 +80,10 @@ message MarkClusterRequest{
 
 message MarkClusterReply{
     string status = 1;
+}
+
+message CheckCloseContactReply{
+    repeated Result results = 1;
 }
 
 message Result{

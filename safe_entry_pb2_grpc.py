@@ -39,6 +39,11 @@ class SafeEntryStub(object):
                 request_serializer=safe__entry__pb2.CheckInHistoryRequest.SerializeToString,
                 response_deserializer=safe__entry__pb2.CheckInHistoryReply.FromString,
                 )
+        self.CheckCloseContact = channel.unary_unary(
+                '/safe_entry.SafeEntry/CheckCloseContact',
+                request_serializer=safe__entry__pb2.CheckCloseContactRequest.SerializeToString,
+                response_deserializer=safe__entry__pb2.CheckCloseContactReply.FromString,
+                )
 
 
 class SafeEntryServicer(object):
@@ -74,6 +79,12 @@ class SafeEntryServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CheckCloseContact(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_SafeEntryServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -101,6 +112,11 @@ def add_SafeEntryServicer_to_server(servicer, server):
                     servicer.CheckInHistory,
                     request_deserializer=safe__entry__pb2.CheckInHistoryRequest.FromString,
                     response_serializer=safe__entry__pb2.CheckInHistoryReply.SerializeToString,
+            ),
+            'CheckCloseContact': grpc.unary_unary_rpc_method_handler(
+                    servicer.CheckCloseContact,
+                    request_deserializer=safe__entry__pb2.CheckCloseContactRequest.FromString,
+                    response_serializer=safe__entry__pb2.CheckCloseContactReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -194,6 +210,23 @@ class SafeEntry(object):
         return grpc.experimental.unary_unary(request, target, '/safe_entry.SafeEntry/CheckInHistory',
             safe__entry__pb2.CheckInHistoryRequest.SerializeToString,
             safe__entry__pb2.CheckInHistoryReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CheckCloseContact(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/safe_entry.SafeEntry/CheckCloseContact',
+            safe__entry__pb2.CheckCloseContactRequest.SerializeToString,
+            safe__entry__pb2.CheckCloseContactReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
