@@ -101,7 +101,9 @@ class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
         results = records.find({"nric": request.nric}, {"_id": 0})
         for i in results:
             i['checkInTime'] = i['checkInTime'].isoformat()
-            i['checkOutTime'] = i['checkOutTime'].isoformat()
+            
+            if i['checkOutTime']:
+                i['checkOutTime'] = i['checkOutTime'].isoformat()
             formatted_results.append(i)
         print(formatted_results)
         return safe_entry_pb2.CheckInHistoryReply(results=formatted_results)
