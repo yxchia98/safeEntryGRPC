@@ -12,6 +12,9 @@ service SafeEntry {
 service SpecialAccess {
     rpc MarkCluster (MarkClusterRequest) returns (MarkClusterReply){}
 }
+service Notification {
+    rpc SubscribeNotification (NotificationRequest) returns (stream NotificationResponse){}
+}
 
 
 // requests 
@@ -84,3 +87,13 @@ message Result{
     string checkOutTime = 5;
     bool closeContact = 6;
 }
+
+message NotificationRequest{
+    string name = 1;
+    string nric = 2;
+}
+
+message NotificationResponse{
+    repeated Result results = 1;
+}
+
