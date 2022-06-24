@@ -93,7 +93,6 @@ async def main():
     nric = 'nric5'
     notificationTask = asyncio.create_task(
         subscribeNotification(name=name, nric=nric))
-    await notificationTask
     # asyncio.create_task(checkInIndividual(name=name, nric=nric,
     #             location=location))
     # asyncio.create_task(checkOutIndividual(name=name, nric=nric,
@@ -103,6 +102,7 @@ async def main():
     # asyncio.create_task(checkOutGroup(names=groupnames,
     #             nrics=groupnrics, location=location))
     task = asyncio.create_task(checkInHistory(nric=nric))
+    await notificationTask
     await task
 
 
