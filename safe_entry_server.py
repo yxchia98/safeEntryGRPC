@@ -133,21 +133,27 @@ class SpecialAccess(safe_entry_pb2_grpc.SpecialAccessServicer):
         epoch_delta_time = (time - timedelta(days=14)).timestamp()
 
         records_collection = db['records']
-        location_documents = records_collection.find({"location": request.location})
+        location_documents = records_collection.find(
+            {"location": request.location})
         for doc in location_documents:
             print(parser.parse(doc['checkInTime'].isoformat()).timestamp())
-            epoch_visit_time = parser.parse(doc['checkInTime'].isoformat()).timestamp()
+            epoch_visit_time = parser.parse(
+                doc['checkInTime'].isoformat()).timestamp()
             if epoch_delta_time <= epoch_visit_time <= epoch_time:
                 doc['closeContact'] = True
                 records_collection.replace_one({"_id": doc["_id"]}, doc)
 
         return safe_entry_pb2.MarkClusterReply(status="complete!")
 
+
 def populate() -> None:
 
-    names = ['Chua Yi Xuan', 'Ooi Jun Kai', 'Lim Jun Xian', 'Brandon Ong', 'Low Kai Heng']
-    nric = ['S1234567A', 'S1234567B', 'S1234567C', 'S1234567D', 'S1234567E', 'S1234567F']
-    locations = ['AMK Hub', 'Hai Di Lao', 'Yakiniku', 'Saizerya', 'Woodlands MRT', 'SIT @ NYP', 'Yio Chu Kang MRT']
+    names = ['Chua Yi Xuan', 'Ooi Jun Kai',
+             'Lim Jun Xian', 'Brandon Ong', 'Low Kai Heng']
+    nric = ['S1234567A', 'S1234567B', 'S1234567C',
+            'S1234567D', 'S1234567E', 'S1234567F']
+    locations = ['AMK Hub', 'Hai Di Lao', 'Yakiniku', 'Saizerya',
+                 'Woodlands MRT', 'SIT @ NYP', 'Yio Chu Kang MRT']
 
     time = datetime.now()
     mongoDB = MongoDatabase()
@@ -175,11 +181,12 @@ def populate() -> None:
                 records.insert_one(record_template)
             count += 1
 
+
 class Notification(safe_entry_pb2_grpc.NotificationServicer):
     mongoDB = MongoDatabase()
     mongoDB.connect()
-    close_contact_records = [];
-    old_records = [];
+    close_contact_records = []
+    old_records = []
 
     async def SubscribeNotification(self, request: safe_entry_pb2.NotificationRequest, context) -> safe_entry_pb2.NotificationResponse:
 
@@ -194,21 +201,23 @@ class Notification(safe_entry_pb2_grpc.NotificationServicer):
 
             db = self.mongoDB.connect_database('safe-entry')
             records = db['records']
-            all_records = records.find({'checkInTime': { "$gt" : time_delta, "$lt" : time}, 'nric': {"$eq": request.nric}, 'closeContact': {"$eq": True}})
+            all_records = records.find({'checkInTime': {"$gt": time_delta, "$lt": time}, 'nric': {
+                                       "$eq": request.nric}, 'closeContact': {"$eq": True}})
             cloned_cursor = all_records.clone()
             all_records_parsed = list(cloned_cursor)
 
             if self.old_records != all_records_parsed:
                 for doc in all_records:
-                    checkOutTime_parsed = doc['checkOutTime'] = doc['checkOutTime'].isoformat() if doc['checkOutTime'] else ''
+                    checkOutTime_parsed = doc['checkOutTime'] = doc['checkOutTime'].isoformat(
+                    ) if doc['checkOutTime'] else ''
 
                     self.close_contact_records.append({
-                    'name': doc["name"],
-                    'nric': doc["nric"],
-                    'location': doc["location"],
-                    'checkInTime': doc["checkInTime"].isoformat(),
-                    'checkOutTime': checkOutTime_parsed,
-                    'closeContact': doc["closeContact"]
+                        'name': doc["name"],
+                        'nric': doc["nric"],
+                        'location': doc["location"],
+                        'checkInTime': doc["checkInTime"].isoformat(),
+                        'checkOutTime': checkOutTime_parsed,
+                        'closeContact': doc["closeContact"]
                     })
 
                 if all_records_parsed:
@@ -218,7 +227,7 @@ class Notification(safe_entry_pb2_grpc.NotificationServicer):
                     print(self.close_contact_records)
                     yield safe_entry_pb2.NotificationResponse(results=self.close_contact_records)
             self.old_records = copy.deepcopy(all_records_parsed)
-            
+
 
 async def serve() -> None:
     server = grpc.aio.server()

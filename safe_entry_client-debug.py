@@ -9,7 +9,7 @@ import threading
 
 
 menu_loop = True
-
+stop_threads = False
 menu_options = {
     1: 'Check In - Single',
     2: 'Check Out - Single',
@@ -19,9 +19,11 @@ menu_options = {
     6: 'Exit',
 }
 
+
 def print_menu():
     for key in menu_options.keys():
-        print (key, '--', menu_options[key]) 
+        print(key, '--', menu_options[key])
+
 
 async def checkInIndividual(name: str, nric: str, location: str):
     async with grpc.aio.insecure_channel("localhost:50051") as channel:
@@ -93,10 +95,13 @@ async def subscribeNotification(name: str, nric: str):
             )
         )
         while True:
+            global stop_threads
+            if stop_threads:
+                break
             collectedresponse = await response.read()
             empty_string = ""
             hyphen = " to "
-            
+
             for results in collectedresponse.results:
                 print(f"\nAlert! You, {results.name} ({results.nric}), visited {results.location} on {results.checkInTime} { hyphen if results.checkOutTime else empty_string} {results.checkOutTime if results.checkOutTime else empty_string} which has been marked as a COVID Cluser. Please quarantine for 14 days.\n")
 
@@ -104,9 +109,12 @@ async def subscribeNotification(name: str, nric: str):
         #     # closeContact wont show if false, only shows if true
         #     print(i)
 
+
 async def subscriptionThreadFunction(name: str, nric: str):
-    notificationTask = asyncio.create_task(subscribeNotification(name=name, nric=nric))
+    notificationTask = asyncio.create_task(
+        subscribeNotification(name=name, nric=nric))
     await notificationTask
+
 
 async def main():
 
@@ -124,7 +132,8 @@ async def main():
     # asyncio.create_task(checkOutGroup(names=groupnames,
     #             nrics=groupnrics, location=location))
 
-    subscription_thread = threading.Thread(target=asyncio.run, args=(subscriptionThreadFunction(name, nric),), daemon=True)
+    subscription_thread = threading.Thread(target=asyncio.run, args=(
+        subscriptionThreadFunction(name, nric),), daemon=True)
     subscription_thread.start()
 
     while menu_loop:
@@ -149,6 +158,8 @@ async def main():
             exit()
         else:
             print('Invalid option. Please enter a number between 1 and 4.')
+    stop_threads = True             # signal to notification process to exit
+    subscription_thread.join()      # join and kill notification thread
 
 if __name__ == "__main__":
     asyncio.run(main())
