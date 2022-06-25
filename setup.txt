@@ -1,1 +1,3 @@
 docker run --name safe-entry-mongo -d -p 27017:27017 -v $pwd/mongodata:/data/db --network bridge -e MONGO_INITDB_ROOT_USERNAME=adminuser -e MONGO_INITDB_ROOT_PASSWORD=csc3004 mongo
+docker exec -i cb9d6f5345f5  mongoexport -u adminuser -p csc3004 --authenticationDatabase admin --db safe-entry --collection records --type=csv --fields _id,name,nric,location,checkInTime,checkOutTime --out ./records.csv
+docker cp safe-entry-mongo:/records.csv .

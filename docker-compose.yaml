@@ -1,0 +1,18 @@
+version: '3'
+services:
+  safe-entry-mongo:
+    image: mongo:latest
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: adminuser
+      MONGO_INITDB_ROOT_PASSWORD: csc3004
+  mongo_seed:
+    image: mongo:latest
+    links:
+      - safe-entry-mongo
+    volumes:
+      - ./mongo-seed:/mongo-seed
+    command:
+      /mongo-seed/import.sh
