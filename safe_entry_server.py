@@ -1,5 +1,7 @@
 import asyncio
+import copy
 import logging
+from operator import gt
 from dateutil import parser
 from sqlite3 import Date
 from tokenize import Special
@@ -136,7 +138,6 @@ class SpecialAccess(safe_entry_pb2_grpc.SpecialAccessServicer):
             print(parser.parse(doc['checkInTime'].isoformat()).timestamp())
             epoch_visit_time = parser.parse(doc['checkInTime'].isoformat()).timestamp()
             if epoch_delta_time <= epoch_visit_time <= epoch_time:
-                print("CONTACT CONTACT CONTACT!")
                 doc['closeContact'] = True
                 records_collection.replace_one({"_id": doc["_id"]}, doc)
 
@@ -173,31 +174,51 @@ def populate() -> None:
                 }
                 records.insert_one(record_template)
             count += 1
-    
 
 class Notification(safe_entry_pb2_grpc.NotificationServicer):
     mongoDB = MongoDatabase()
     mongoDB.connect()
+    close_contact_records = [];
+    old_records = [];
 
     async def SubscribeNotification(self, request: safe_entry_pb2.NotificationRequest, context) -> safe_entry_pb2.NotificationResponse:
+
+        time = datetime.now()
+        time_delta = time - timedelta(days=14)
+
         # infinite while loop
         while(True):
-            # test server-sided streaming, will send dummy notification every 1 sec
-            print('sending notification')
-            formatted_record = []
-            await asyncio.sleep(1)
-            record = {
-                'name': request.name,
-                'nric': request.nric,
-                'location': 'location',
-                'checkInTime': 'testCheckInTime',
-                'checkOutTime': 'testCheckOutTime',
-                'closeContact': True
-            }
-            formatted_record.append(record)
-            # send to stream response
-            yield safe_entry_pb2.NotificationResponse(results=formatted_record)
 
+            # Check for updates every 10 seconds
+            await asyncio.sleep(2)
+
+            db = self.mongoDB.connect_database('safe-entry')
+            records = db['records']
+            all_records = records.find({'checkInTime': { "$gt" : time_delta, "$lt" : time}, 'nric': {"$eq": request.nric}, 'closeContact': {"$eq": True}})
+            cloned_cursor = all_records.clone()
+            all_records_parsed = list(cloned_cursor)
+
+            if self.old_records != all_records_parsed:
+                for doc in all_records:
+                    checkOutTime_parsed = doc['checkOutTime'] = doc['checkOutTime'].isoformat() if doc['checkOutTime'] else ''
+
+                    self.close_contact_records.append({
+                    'name': doc["name"],
+                    'nric': doc["nric"],
+                    'location': doc["location"],
+                    'checkInTime': doc["checkInTime"].isoformat(),
+                    'checkOutTime': checkOutTime_parsed,
+                    'closeContact': doc["closeContact"]
+                    })
+
+                if all_records_parsed:
+                    # test server-sided streaming, will send dummy notification every 10 sec
+                    print('sending notification to', request.name)
+                    # send to stream response
+                    print(self.close_contact_records)
+                    yield safe_entry_pb2.NotificationResponse(results=self.close_contact_records)
+            self.old_records = copy.deepcopy(all_records_parsed)
+            
 
 async def serve() -> None:
     server = grpc.aio.server()
@@ -211,7 +232,6 @@ async def serve() -> None:
     logging.info("Starting server on %s", listen_addr)
     await server.start()
     await server.wait_for_termination()
-
 
 if __name__ == "__main__":
     populate()
