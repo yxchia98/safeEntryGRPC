@@ -8,6 +8,7 @@ service SafeEntry {
     rpc CheckOutIndividual (CheckOutIndividualRequest) returns (CheckOutIndividualReply) {}
     rpc CheckOutGroup (CheckOutGroupRequest) returns (CheckOutGroupReply) {}
     rpc CheckInHistory (CheckInHistoryRequest) returns (CheckInHistoryReply) {}
+    rpc CheckExposureHistory (CheckExposureHistoryRequest) returns (CheckExposureHistoryReply) {}
     rpc CheckCloseContact (CheckCloseContactRequest) returns (CheckCloseContactReply) {}
 }
 
@@ -16,6 +17,7 @@ service SpecialAccess {
 }
 service Notification {
     rpc SubscribeNotification (NotificationRequest) returns (stream NotificationResponse){}
+    rpc UnsubscribeNotification (UnsubscribeRequest) returns (UnsubscribeReply) {}
 }
 
 
@@ -49,6 +51,10 @@ message CheckInHistoryRequest{
     string nric = 1;
 }
 
+message CheckExposureHistoryRequest{
+    string nric = 1;
+}
+
 message CheckCloseContactRequest{
     string nric = 1;
 }
@@ -72,6 +78,10 @@ message CheckOutGroupReply {
 }
 
 message CheckInHistoryReply{
+    repeated Result results = 1;
+}
+
+message CheckExposureHistoryReply{
     repeated Result results = 1;
 }
 
@@ -101,6 +111,14 @@ message Result{
 message NotificationRequest{
     string name = 1;
     string nric = 2;
+}
+
+message UnsubscribeRequest{
+    string nric = 1;
+}
+
+message UnsubscribeReply{
+    string message = 1;
 }
 
 message NotificationResponse{

@@ -15,8 +15,9 @@ menu_options = {
     2: 'Check Out - Single',
     3: 'Check In - Group',
     4: 'Check Out - Group',
-    5: 'Check History',
-    6: 'Exit',
+    5: 'History',
+    6: 'Exposure History',
+    7: 'Exit',
 }
 
 
@@ -84,6 +85,17 @@ async def checkInHistory(nric):
             # closeContact wont show if false, only shows if true
             print(i)
 
+async def checkExposureHistory(nric):
+    async with grpc.aio.insecure_channel("localhost:50051") as channel:
+        stub = safe_entry_pb2_grpc.SafeEntryStub(channel)
+        response = await stub.CheckExposureHistory(
+            safe_entry_pb2.CheckExposureHistoryRequest(
+                nric=nric)
+        )
+        for i in response.results:
+            # closeContact wont show if false, only shows if true
+            print(i)
+
 
 async def subscribeNotification(name: str, nric: str):
     async with grpc.aio.insecure_channel("localhost:50051") as channel:
@@ -97,6 +109,7 @@ async def subscribeNotification(name: str, nric: str):
         while True:
             global stop_threads
             if stop_threads:
+                channel.close()
                 break
             collectedresponse = await response.read()
             empty_string = ""
@@ -108,6 +121,16 @@ async def subscribeNotification(name: str, nric: str):
         # async for i in response:
         #     # closeContact wont show if false, only shows if true
         #     print(i)
+
+async def unsubscribeNotification(nric: str):
+    async with grpc.aio.insecure_channel("localhost:50051") as channel:
+        stub = safe_entry_pb2_grpc.NotificationStub(channel)
+        response = await stub.UnsubscribeNotification(
+            safe_entry_pb2.UnsubscribeRequest(
+                nric=nric
+            )
+        )
+        print(response)
 
 
 async def subscriptionThreadFunction(name: str, nric: str):
@@ -178,14 +201,22 @@ async def main():
             nrics=groupnrics, location=location))
 
         elif option == 5:
+            print("\n================")
+            print("Check In History")
+            print("================\n")
             await asyncio.create_task(checkInHistory(nric=nric))
         elif option == 6:
+            print("\n================")
+            print("Exposure History")
+            print("================\n")
+            await asyncio.create_task(checkExposureHistory(nric=nric))
+        elif option == 7:
             print('Exiting')
+            await asyncio.create_task(unsubscribeNotification(nric=nric))
+            stop_threads = True
             exit()
         else:
             print('Invalid option. Please enter a number between 1 and 4.')
-    stop_threads = True             # signal to notification process to exit
-    subscription_thread.join()      # join and kill notification thread
 
 if __name__ == "__main__":
     asyncio.run(main())

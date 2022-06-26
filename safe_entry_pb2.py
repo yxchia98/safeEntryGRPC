@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10safe_entry.proto\x12\nsafe_entry\"H\n\x18\x43heckInIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"E\n\x13\x43heckInGroupRequest\x12\r\n\x05names\x18\x01 \x03(\t\x12\r\n\x05nrics\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"I\n\x19\x43heckOutIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"F\n\x14\x43heckOutGroupRequest\x12\r\n\x05names\x18\x01 \x03(\t\x12\r\n\x05nrics\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"%\n\x15\x43heckInHistoryRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"(\n\x18\x43heckCloseContactRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"(\n\x16\x43heckInIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"#\n\x11\x43heckInGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\")\n\x17\x43heckOutIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"$\n\x12\x43heckOutGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\":\n\x13\x43heckInHistoryReply\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result\"B\n\x12MarkClusterRequest\x12\x10\n\x08location\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x02 \x01(\t\x12\x0c\n\x04time\x18\x03 \x01(\t\"\"\n\x10MarkClusterReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"=\n\x16\x43heckCloseContactReply\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result\"w\n\x06Result\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x13\n\x0b\x63heckInTime\x18\x04 \x01(\t\x12\x14\n\x0c\x63heckOutTime\x18\x05 \x01(\t\x12\x14\n\x0c\x63loseContact\x18\x06 \x01(\x08\"1\n\x13NotificationRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\";\n\x14NotificationResponse\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result2\xb2\x04\n\tSafeEntry\x12`\n\x11\x43heckInIndividual\x12$.safe_entry.CheckInIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12Q\n\x0c\x43heckInGroup\x12\x1f.safe_entry.CheckInGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12\x62\n\x12\x43heckOutIndividual\x12%.safe_entry.CheckOutIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12S\n\rCheckOutGroup\x12 .safe_entry.CheckOutGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12V\n\x0e\x43heckInHistory\x12!.safe_entry.CheckInHistoryRequest\x1a\x1f.safe_entry.CheckInHistoryReply\"\x00\x12_\n\x11\x43heckCloseContact\x12$.safe_entry.CheckCloseContactRequest\x1a\".safe_entry.CheckCloseContactReply\"\x00\x32^\n\rSpecialAccess\x12M\n\x0bMarkCluster\x12\x1e.safe_entry.MarkClusterRequest\x1a\x1c.safe_entry.MarkClusterReply\"\x00\x32n\n\x0cNotification\x12^\n\x15SubscribeNotification\x12\x1f.safe_entry.NotificationRequest\x1a .safe_entry.NotificationResponse\"\x00\x30\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10safe_entry.proto\x12\nsafe_entry\"H\n\x18\x43heckInIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"E\n\x13\x43heckInGroupRequest\x12\r\n\x05names\x18\x01 \x03(\t\x12\r\n\x05nrics\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"I\n\x19\x43heckOutIndividualRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"F\n\x14\x43heckOutGroupRequest\x12\r\n\x05names\x18\x01 \x03(\t\x12\r\n\x05nrics\x18\x02 \x03(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"%\n\x15\x43heckInHistoryRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"+\n\x1b\x43heckExposureHistoryRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"(\n\x18\x43heckCloseContactRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"(\n\x16\x43heckInIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"#\n\x11\x43heckInGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\")\n\x17\x43heckOutIndividualReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"$\n\x12\x43heckOutGroupReply\x12\x0e\n\x06status\x18\x01 \x01(\t\":\n\x13\x43heckInHistoryReply\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result\"@\n\x19\x43heckExposureHistoryReply\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result\"B\n\x12MarkClusterRequest\x12\x10\n\x08location\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x02 \x01(\t\x12\x0c\n\x04time\x18\x03 \x01(\t\"\"\n\x10MarkClusterReply\x12\x0e\n\x06status\x18\x01 \x01(\t\"=\n\x16\x43heckCloseContactReply\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result\"w\n\x06Result\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x13\n\x0b\x63heckInTime\x18\x04 \x01(\t\x12\x14\n\x0c\x63heckOutTime\x18\x05 \x01(\t\x12\x14\n\x0c\x63loseContact\x18\x06 \x01(\x08\"1\n\x13NotificationRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\"\"\n\x12UnsubscribeRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"#\n\x10UnsubscribeReply\x12\x0f\n\x07message\x18\x01 \x01(\t\";\n\x14NotificationResponse\x12#\n\x07results\x18\x01 \x03(\x0b\x32\x12.safe_entry.Result2\x9c\x05\n\tSafeEntry\x12`\n\x11\x43heckInIndividual\x12$.safe_entry.CheckInIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12Q\n\x0c\x43heckInGroup\x12\x1f.safe_entry.CheckInGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12\x62\n\x12\x43heckOutIndividual\x12%.safe_entry.CheckOutIndividualRequest\x1a#.safe_entry.CheckOutIndividualReply\"\x00\x12S\n\rCheckOutGroup\x12 .safe_entry.CheckOutGroupRequest\x1a\x1e.safe_entry.CheckOutGroupReply\"\x00\x12V\n\x0e\x43heckInHistory\x12!.safe_entry.CheckInHistoryRequest\x1a\x1f.safe_entry.CheckInHistoryReply\"\x00\x12h\n\x14\x43heckExposureHistory\x12\'.safe_entry.CheckExposureHistoryRequest\x1a%.safe_entry.CheckExposureHistoryReply\"\x00\x12_\n\x11\x43heckCloseContact\x12$.safe_entry.CheckCloseContactRequest\x1a\".safe_entry.CheckCloseContactReply\"\x00\x32^\n\rSpecialAccess\x12M\n\x0bMarkCluster\x12\x1e.safe_entry.MarkClusterRequest\x1a\x1c.safe_entry.MarkClusterReply\"\x00\x32\xc9\x01\n\x0cNotification\x12^\n\x15SubscribeNotification\x12\x1f.safe_entry.NotificationRequest\x1a .safe_entry.NotificationResponse\"\x00\x30\x01\x12Y\n\x17UnsubscribeNotification\x12\x1e.safe_entry.UnsubscribeRequest\x1a\x1c.safe_entry.UnsubscribeReply\"\x00\x62\x06proto3')
 
 
 
@@ -23,17 +23,21 @@ _CHECKINGROUPREQUEST = DESCRIPTOR.message_types_by_name['CheckInGroupRequest']
 _CHECKOUTINDIVIDUALREQUEST = DESCRIPTOR.message_types_by_name['CheckOutIndividualRequest']
 _CHECKOUTGROUPREQUEST = DESCRIPTOR.message_types_by_name['CheckOutGroupRequest']
 _CHECKINHISTORYREQUEST = DESCRIPTOR.message_types_by_name['CheckInHistoryRequest']
+_CHECKEXPOSUREHISTORYREQUEST = DESCRIPTOR.message_types_by_name['CheckExposureHistoryRequest']
 _CHECKCLOSECONTACTREQUEST = DESCRIPTOR.message_types_by_name['CheckCloseContactRequest']
 _CHECKININDIVIDUALREPLY = DESCRIPTOR.message_types_by_name['CheckInIndividualReply']
 _CHECKINGROUPREPLY = DESCRIPTOR.message_types_by_name['CheckInGroupReply']
 _CHECKOUTINDIVIDUALREPLY = DESCRIPTOR.message_types_by_name['CheckOutIndividualReply']
 _CHECKOUTGROUPREPLY = DESCRIPTOR.message_types_by_name['CheckOutGroupReply']
 _CHECKINHISTORYREPLY = DESCRIPTOR.message_types_by_name['CheckInHistoryReply']
+_CHECKEXPOSUREHISTORYREPLY = DESCRIPTOR.message_types_by_name['CheckExposureHistoryReply']
 _MARKCLUSTERREQUEST = DESCRIPTOR.message_types_by_name['MarkClusterRequest']
 _MARKCLUSTERREPLY = DESCRIPTOR.message_types_by_name['MarkClusterReply']
 _CHECKCLOSECONTACTREPLY = DESCRIPTOR.message_types_by_name['CheckCloseContactReply']
 _RESULT = DESCRIPTOR.message_types_by_name['Result']
 _NOTIFICATIONREQUEST = DESCRIPTOR.message_types_by_name['NotificationRequest']
+_UNSUBSCRIBEREQUEST = DESCRIPTOR.message_types_by_name['UnsubscribeRequest']
+_UNSUBSCRIBEREPLY = DESCRIPTOR.message_types_by_name['UnsubscribeReply']
 _NOTIFICATIONRESPONSE = DESCRIPTOR.message_types_by_name['NotificationResponse']
 CheckInIndividualRequest = _reflection.GeneratedProtocolMessageType('CheckInIndividualRequest', (_message.Message,), {
   'DESCRIPTOR' : _CHECKININDIVIDUALREQUEST,
@@ -69,6 +73,13 @@ CheckInHistoryRequest = _reflection.GeneratedProtocolMessageType('CheckInHistory
   # @@protoc_insertion_point(class_scope:safe_entry.CheckInHistoryRequest)
   })
 _sym_db.RegisterMessage(CheckInHistoryRequest)
+
+CheckExposureHistoryRequest = _reflection.GeneratedProtocolMessageType('CheckExposureHistoryRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CHECKEXPOSUREHISTORYREQUEST,
+  '__module__' : 'safe_entry_pb2'
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckExposureHistoryRequest)
+  })
+_sym_db.RegisterMessage(CheckExposureHistoryRequest)
 
 CheckCloseContactRequest = _reflection.GeneratedProtocolMessageType('CheckCloseContactRequest', (_message.Message,), {
   'DESCRIPTOR' : _CHECKCLOSECONTACTREQUEST,
@@ -112,6 +123,13 @@ CheckInHistoryReply = _reflection.GeneratedProtocolMessageType('CheckInHistoryRe
   })
 _sym_db.RegisterMessage(CheckInHistoryReply)
 
+CheckExposureHistoryReply = _reflection.GeneratedProtocolMessageType('CheckExposureHistoryReply', (_message.Message,), {
+  'DESCRIPTOR' : _CHECKEXPOSUREHISTORYREPLY,
+  '__module__' : 'safe_entry_pb2'
+  # @@protoc_insertion_point(class_scope:safe_entry.CheckExposureHistoryReply)
+  })
+_sym_db.RegisterMessage(CheckExposureHistoryReply)
+
 MarkClusterRequest = _reflection.GeneratedProtocolMessageType('MarkClusterRequest', (_message.Message,), {
   'DESCRIPTOR' : _MARKCLUSTERREQUEST,
   '__module__' : 'safe_entry_pb2'
@@ -147,6 +165,20 @@ NotificationRequest = _reflection.GeneratedProtocolMessageType('NotificationRequ
   })
 _sym_db.RegisterMessage(NotificationRequest)
 
+UnsubscribeRequest = _reflection.GeneratedProtocolMessageType('UnsubscribeRequest', (_message.Message,), {
+  'DESCRIPTOR' : _UNSUBSCRIBEREQUEST,
+  '__module__' : 'safe_entry_pb2'
+  # @@protoc_insertion_point(class_scope:safe_entry.UnsubscribeRequest)
+  })
+_sym_db.RegisterMessage(UnsubscribeRequest)
+
+UnsubscribeReply = _reflection.GeneratedProtocolMessageType('UnsubscribeReply', (_message.Message,), {
+  'DESCRIPTOR' : _UNSUBSCRIBEREPLY,
+  '__module__' : 'safe_entry_pb2'
+  # @@protoc_insertion_point(class_scope:safe_entry.UnsubscribeReply)
+  })
+_sym_db.RegisterMessage(UnsubscribeReply)
+
 NotificationResponse = _reflection.GeneratedProtocolMessageType('NotificationResponse', (_message.Message,), {
   'DESCRIPTOR' : _NOTIFICATIONRESPONSE,
   '__module__' : 'safe_entry_pb2'
@@ -170,34 +202,42 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _CHECKOUTGROUPREQUEST._serialized_end=322
   _CHECKINHISTORYREQUEST._serialized_start=324
   _CHECKINHISTORYREQUEST._serialized_end=361
-  _CHECKCLOSECONTACTREQUEST._serialized_start=363
-  _CHECKCLOSECONTACTREQUEST._serialized_end=403
-  _CHECKININDIVIDUALREPLY._serialized_start=405
-  _CHECKININDIVIDUALREPLY._serialized_end=445
-  _CHECKINGROUPREPLY._serialized_start=447
-  _CHECKINGROUPREPLY._serialized_end=482
-  _CHECKOUTINDIVIDUALREPLY._serialized_start=484
-  _CHECKOUTINDIVIDUALREPLY._serialized_end=525
-  _CHECKOUTGROUPREPLY._serialized_start=527
-  _CHECKOUTGROUPREPLY._serialized_end=563
-  _CHECKINHISTORYREPLY._serialized_start=565
-  _CHECKINHISTORYREPLY._serialized_end=623
-  _MARKCLUSTERREQUEST._serialized_start=625
-  _MARKCLUSTERREQUEST._serialized_end=691
-  _MARKCLUSTERREPLY._serialized_start=693
-  _MARKCLUSTERREPLY._serialized_end=727
-  _CHECKCLOSECONTACTREPLY._serialized_start=729
-  _CHECKCLOSECONTACTREPLY._serialized_end=790
-  _RESULT._serialized_start=792
-  _RESULT._serialized_end=911
-  _NOTIFICATIONREQUEST._serialized_start=913
-  _NOTIFICATIONREQUEST._serialized_end=962
-  _NOTIFICATIONRESPONSE._serialized_start=964
-  _NOTIFICATIONRESPONSE._serialized_end=1023
-  _SAFEENTRY._serialized_start=1026
-  _SAFEENTRY._serialized_end=1588
-  _SPECIALACCESS._serialized_start=1590
-  _SPECIALACCESS._serialized_end=1684
-  _NOTIFICATION._serialized_start=1686
-  _NOTIFICATION._serialized_end=1796
+  _CHECKEXPOSUREHISTORYREQUEST._serialized_start=363
+  _CHECKEXPOSUREHISTORYREQUEST._serialized_end=406
+  _CHECKCLOSECONTACTREQUEST._serialized_start=408
+  _CHECKCLOSECONTACTREQUEST._serialized_end=448
+  _CHECKININDIVIDUALREPLY._serialized_start=450
+  _CHECKININDIVIDUALREPLY._serialized_end=490
+  _CHECKINGROUPREPLY._serialized_start=492
+  _CHECKINGROUPREPLY._serialized_end=527
+  _CHECKOUTINDIVIDUALREPLY._serialized_start=529
+  _CHECKOUTINDIVIDUALREPLY._serialized_end=570
+  _CHECKOUTGROUPREPLY._serialized_start=572
+  _CHECKOUTGROUPREPLY._serialized_end=608
+  _CHECKINHISTORYREPLY._serialized_start=610
+  _CHECKINHISTORYREPLY._serialized_end=668
+  _CHECKEXPOSUREHISTORYREPLY._serialized_start=670
+  _CHECKEXPOSUREHISTORYREPLY._serialized_end=734
+  _MARKCLUSTERREQUEST._serialized_start=736
+  _MARKCLUSTERREQUEST._serialized_end=802
+  _MARKCLUSTERREPLY._serialized_start=804
+  _MARKCLUSTERREPLY._serialized_end=838
+  _CHECKCLOSECONTACTREPLY._serialized_start=840
+  _CHECKCLOSECONTACTREPLY._serialized_end=901
+  _RESULT._serialized_start=903
+  _RESULT._serialized_end=1022
+  _NOTIFICATIONREQUEST._serialized_start=1024
+  _NOTIFICATIONREQUEST._serialized_end=1073
+  _UNSUBSCRIBEREQUEST._serialized_start=1075
+  _UNSUBSCRIBEREQUEST._serialized_end=1109
+  _UNSUBSCRIBEREPLY._serialized_start=1111
+  _UNSUBSCRIBEREPLY._serialized_end=1146
+  _NOTIFICATIONRESPONSE._serialized_start=1148
+  _NOTIFICATIONRESPONSE._serialized_end=1207
+  _SAFEENTRY._serialized_start=1210
+  _SAFEENTRY._serialized_end=1878
+  _SPECIALACCESS._serialized_start=1880
+  _SPECIALACCESS._serialized_end=1974
+  _NOTIFICATION._serialized_start=1977
+  _NOTIFICATION._serialized_end=2178
 # @@protoc_insertion_point(module_scope)
