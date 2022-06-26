@@ -18,7 +18,7 @@ from collections import defaultdict
 
 def populate() -> None:
 
-    names = ['Chua Yi Xuan', 'Ooi Jun Kai',
+    names = ['Chia Yi Xuan', 'Ooi Jun Kai',
              'Lim Jun Xian', 'Brandon Ong', 'Low Kai Heng']
     nric = ['S1234567A', 'S1234567B', 'S1234567C',
             'S1234567D', 'S1234567E', 'S1234567F']
