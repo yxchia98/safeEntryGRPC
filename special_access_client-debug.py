@@ -5,6 +5,15 @@ import grpc
 import safe_entry_pb2
 import safe_entry_pb2_grpc
 
+menu_loop = True
+menu_options = {
+    1: 'Mark Cluster',
+    2: 'Exit'
+}
+
+def print_menu():
+    for key in menu_options.keys():
+        print(key, '--', menu_options[key])
 
 async def markCluster(location: str, date: str, time: str):
     async with grpc.aio.insecure_channel("localhost:50051") as channel:
@@ -19,7 +28,21 @@ async def markCluster(location: str, date: str, time: str):
 
 if __name__ == "__main__":
     logging.basicConfig()
-    location = 'AMK Hub'
-    date = '30/06/2022'
-    time = '15:30'
-    asyncio.run(markCluster(location=location, date=date, time=time))
+
+    while (menu_loop):
+        print_menu()
+        option = ''
+
+        try:
+            option = int(input("Enter your choice: "))
+        except:
+            print('Wrong input. Please enter a number...')
+
+        if option == 1:
+            location = input('Enter location of cluster: ')
+            date = input('Enter date of cluster (DD/MM/YYYY): ')
+            time = input('Enter time of cluster (00:00 - 23:59):')
+            asyncio.run(markCluster(location=location, date=date, time=time))
+        elif option == 2:
+            print('Exiting')
+            exit()
