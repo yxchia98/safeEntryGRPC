@@ -123,15 +123,6 @@ async def main():
     name = input("Enter your name: ")
     nric = input("Enter your NRIC: ")
 
-    # asyncio.create_task(checkInIndividual(name=name, nric=nric,
-    #             location=location))
-    # asyncio.create_task(checkOutIndividual(name=name, nric=nric,
-    #             location=location))
-    # asyncio.create_task(checkInGroup(names=groupnames,
-    #             nrics=groupnrics, location=location))
-    # asyncio.create_task(checkOutGroup(names=groupnames,
-    #             nrics=groupnrics, location=location))
-
     subscription_thread = threading.Thread(target=asyncio.run, args=(
         subscriptionThreadFunction(name, nric),), daemon=True)
     subscription_thread.start()
@@ -144,15 +135,50 @@ async def main():
         except:
             print('Wrong input. Please enter a number ...')
         if option == 1:
-            print(1)
+            location = input('Enter your location: ')
+            await asyncio.create_task(checkInIndividual(name=name, nric=nric,
+                 location=location))
         elif option == 2:
-            print(2)
+            location = input('Enter your location: ')
+            await asyncio.create_task(checkOutIndividual(name=name, nric=nric,
+                 location=location))
+            
         elif option == 3:
-            print(3)
+            groupnames = [name]
+            groupnrics = [nric]
+            location = input('Enter your location: ')
+            n = int(input('Enter number of people to check in (yourself not included):'))
+
+            for i in range(0, n):
+                temp_name = input(f"Enter no. {i} name: ")
+                temp_nric = input(f"Enter no. {i} NRIC: ")
+                groupnames.append(temp_name)
+                groupnrics.append(temp_nric)
+
+            print(f"Checking in...")
+
+            await asyncio.create_task(checkInGroup(names=groupnames,
+            nrics=groupnrics, location=location))
+            
         elif option == 4:
-            print(4)
+            groupnames = [name]
+            groupnrics = [nric]
+            location = input('Enter your location: ')
+            n = int(input('Enter number of people to check out (yourself not included):'))
+
+            for i in range(0, n):
+                temp_name = input(f"Enter no. {i} name: ")
+                temp_nric = input(f"Enter no. {i} NRIC: ")
+                groupnames.append(temp_name)
+                groupnrics.append(temp_nric)
+
+            print(f"Checking out...")
+
+            await asyncio.create_task(checkOutGroup(names=groupnames,
+            nrics=groupnrics, location=location))
+
         elif option == 5:
-            print(5)
+            await asyncio.create_task(checkInHistory(nric=nric))
         elif option == 6:
             print('Exiting')
             exit()
