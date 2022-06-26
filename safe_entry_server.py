@@ -1,5 +1,6 @@
 import asyncio
 import copy
+from email.policy import default
 import logging
 from operator import gt
 from dateutil import parser
@@ -12,6 +13,7 @@ import safe_entry_pb2
 import safe_entry_pb2_grpc
 from database import MongoDatabase
 from datetime import datetime, timedelta
+from collections import defaultdict
 
 
 class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
@@ -108,7 +110,6 @@ class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
             i['checkOutTime'] = i['checkOutTime'].isoformat(
             ) if i['checkOutTime'] else ''
             formatted_results.append(i)
-        print(formatted_results)
         return safe_entry_pb2.CheckInHistoryReply(results=formatted_results)
 
     async def CheckExposureHistory(self, request: safe_entry_pb2.CheckExposureHistoryRequest, context: grpc.aio.ServicerContext) -> safe_entry_pb2.CheckExposureHistoryReply:
@@ -122,7 +123,6 @@ class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
             i['checkOutTime'] = i['checkOutTime'].isoformat(
             ) if i['checkOutTime'] else ''
             formatted_results.append(i)
-        print(formatted_results)
         return safe_entry_pb2.CheckExposureHistoryReply(results=formatted_results)
 
 
@@ -199,56 +199,65 @@ def populate() -> None:
 class Notification(safe_entry_pb2_grpc.NotificationServicer):
     mongoDB = MongoDatabase()
     mongoDB.connect()
-    # close_contact_records = []
-    # old_records = []
+    close_contact_records = defaultdict(list)
     connected = True
+    db = mongoDB.connect_database('safe-entry')
 
-    async def UnsubscribeNotification(self, request: safe_entry_pb2.UnsubscribeRequest, context) -> safe_entry_pb2.UnsubscribeReply:
-        self.connected = False
+    # async def UnsubscribeNotification(self, request: safe_entry_pb2.UnsubscribeRequest, context) -> safe_entry_pb2.UnsubscribeReply:
+    #     self.connected = False
 
-        # If want to send notification each time user connects, uncomment below.
-        # self.close_contact_records = []
+    #     # If want to send notification each time user connects, uncomment below.
+    #     # self.close_contact_records = []
 
-        print('unsubscribed notification:', request.nric)
-        return safe_entry_pb2.UnsubscribeReply(message='Unsubscribed successfully!')
+    #     print('unsubscribed notification:', request.nric)
+    #     return safe_entry_pb2.UnsubscribeReply(message='Unsubscribed successfully!')
 
     async def SubscribeNotification(self, request: safe_entry_pb2.NotificationRequest, context) -> safe_entry_pb2.NotificationResponse:
 
         time = datetime.now()
         time_delta = time - timedelta(days=14)
-        close_contact_records = []
-        old_records = []
 
         while True:
             print("Checking records for:", request.name, request.nric)
 
-            db = self.mongoDB.connect_database('safe-entry')
-            records = db['records']
+            records = self.db['records']
+            notifications = self.db['notifications']
+
             all_records = records.find({'checkInTime': {"$gt": time_delta, "$lt": time}, 'nric': {
-                                       "$eq": request.nric}, 'closeContact': {"$eq": True}})
+                                       "$eq": request.nric}, 'closeContact': {"$eq": True}}, {'_id': 0})
             cloned_cursor = all_records.clone()
             all_records_parsed = list(cloned_cursor)
+            old_records = notifications.find_one(
+                {'nric': request.nric}, {'_id': 0, 'nric': 1, 'notification_records': 1})
 
-            if old_records != all_records_parsed:
-                for doc in all_records:
-                    checkOutTime_parsed = doc['checkOutTime'] = doc['checkOutTime'].isoformat(
-                    ) if doc['checkOutTime'] else ''
+            # initialize empty doc if theres nothing in MongoDB, to avoid NoneType error
+            if old_records is None:
+                old_records = {
+                    'nric': request.nric,
+                    'notification_records': []
+                }
 
-                    close_contact_records.append({
+            if old_records['notification_records'] != all_records_parsed:
+                new_records = []
+                for doc in all_records_parsed:
+                    if doc not in old_records['notification_records']:
+                        new_records.append(doc)
+
+                for doc in new_records:
+                    formatted_reply = [{
                         'name': doc["name"],
                         'nric': doc["nric"],
                         'location': doc["location"],
                         'checkInTime': doc["checkInTime"].isoformat(),
-                        'checkOutTime': checkOutTime_parsed,
+                        'checkOutTime': doc['checkOutTime'].isoformat(
+                        ) if doc['checkOutTime'] else None,
                         'closeContact': doc["closeContact"]
-                    })
-
-                if all_records_parsed:
-                    # test server-sided streaming, will send dummy notification every 10 sec
+                    }]
                     print('sending notification to', request.name)
-                    yield safe_entry_pb2.NotificationResponse(results=close_contact_records)
-                    close_contact_records.pop()
-            old_records = copy.deepcopy(all_records_parsed)
+                    yield safe_entry_pb2.NotificationResponse(results=formatted_reply)
+
+            notifications.update_one({'nric': request.nric}, {
+                '$set': {'notification_records': all_records_parsed}}, upsert=True)
 
             # Check for updates every 10 seconds
             await asyncio.sleep(10)

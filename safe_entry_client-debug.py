@@ -124,15 +124,15 @@ async def subscribeNotification(name: str, nric: str):
         #     print(i)
 
 
-async def unsubscribeNotification(nric: str):
-    async with grpc.aio.insecure_channel("localhost:50051") as channel:
-        stub = safe_entry_pb2_grpc.NotificationStub(channel)
-        response = await stub.UnsubscribeNotification(
-            safe_entry_pb2.UnsubscribeRequest(
-                nric=nric
-            )
-        )
-        print(response)
+# async def unsubscribeNotification(nric: str):
+#     async with grpc.aio.insecure_channel("localhost:50051") as channel:
+#         stub = safe_entry_pb2_grpc.NotificationStub(channel)
+#         response = await stub.UnsubscribeNotification(
+#             safe_entry_pb2.UnsubscribeRequest(
+#                 nric=nric
+#             )
+#         )
+#         print(response)
 
 
 async def subscriptionThreadFunction(name: str, nric: str):
