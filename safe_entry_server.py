@@ -16,6 +16,42 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 
 
+def populate() -> None:
+
+    names = ['Chua Yi Xuan', 'Ooi Jun Kai',
+             'Lim Jun Xian', 'Brandon Ong', 'Low Kai Heng']
+    nric = ['S1234567A', 'S1234567B', 'S1234567C',
+            'S1234567D', 'S1234567E', 'S1234567F']
+    locations = ['AMK Hub', 'Hai Di Lao', 'Yakiniku', 'Saizerya',
+                 'Woodlands MRT', 'SIT @ NYP', 'Yio Chu Kang MRT']
+
+    time = datetime.now()
+    mongoDB = MongoDatabase()
+    mongoDB.connect()
+    db = mongoDB.connect_database('safe-entry')
+    records = db['records']
+
+    db_count = records.count_documents({})
+
+    if db_count == 0:
+
+        print("Empty records table - populating with some data")
+        count = 0
+
+        for i in names:
+            for j in locations:
+                record_template = {
+                    "name": i,
+                    "nric": nric[count],
+                    "location": j,
+                    "checkInTime": time,
+                    "checkOutTime": None,
+                    'closeContact': False,
+                }
+                records.insert_one(record_template)
+            count += 1
+
+
 class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
     mongoDB = MongoDatabase()
     mongoDB.connect()
@@ -151,7 +187,6 @@ class SpecialAccess(safe_entry_pb2_grpc.SpecialAccessServicer):
         location_documents = records_collection.find(
             {"location": request.location})
         for doc in location_documents:
-            print(parser.parse(doc['checkInTime'].isoformat()).timestamp())
             epoch_visit_time = parser.parse(
                 doc['checkInTime'].isoformat()).timestamp()
             if epoch_delta_time <= epoch_visit_time <= epoch_time:
@@ -161,57 +196,12 @@ class SpecialAccess(safe_entry_pb2_grpc.SpecialAccessServicer):
         return safe_entry_pb2.MarkClusterReply(status="complete!")
 
 
-def populate() -> None:
-
-    names = ['Chua Yi Xuan', 'Ooi Jun Kai',
-             'Lim Jun Xian', 'Brandon Ong', 'Low Kai Heng']
-    nric = ['S1234567A', 'S1234567B', 'S1234567C',
-            'S1234567D', 'S1234567E', 'S1234567F']
-    locations = ['AMK Hub', 'Hai Di Lao', 'Yakiniku', 'Saizerya',
-                 'Woodlands MRT', 'SIT @ NYP', 'Yio Chu Kang MRT']
-
-    time = datetime.now()
-    mongoDB = MongoDatabase()
-    mongoDB.connect()
-    db = mongoDB.connect_database('safe-entry')
-    records = db['records']
-
-    db_count = records.count_documents({})
-
-    if db_count == 0:
-
-        print("Empty records table - populating with some data")
-        count = 0
-
-        for i in names:
-            for j in locations:
-                record_template = {
-                    "name": i,
-                    "nric": nric[count],
-                    "location": j,
-                    "checkInTime": time,
-                    "checkOutTime": None,
-                    'closeContact': False,
-                }
-                records.insert_one(record_template)
-            count += 1
-
-
 class Notification(safe_entry_pb2_grpc.NotificationServicer):
     mongoDB = MongoDatabase()
     mongoDB.connect()
     close_contact_records = defaultdict(list)
     connected = True
     db = mongoDB.connect_database('safe-entry')
-
-    # async def UnsubscribeNotification(self, request: safe_entry_pb2.UnsubscribeRequest, context) -> safe_entry_pb2.UnsubscribeReply:
-    #     self.connected = False
-
-    #     # If want to send notification each time user connects, uncomment below.
-    #     # self.close_contact_records = []
-
-    #     print('unsubscribed notification:', request.nric)
-    #     return safe_entry_pb2.UnsubscribeReply(message='Unsubscribed successfully!')
 
     async def SubscribeNotification(self, request: safe_entry_pb2.NotificationRequest, context) -> safe_entry_pb2.NotificationResponse:
 
