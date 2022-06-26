@@ -115,7 +115,8 @@ class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
         formatted_results = []
         db = self.mongoDB.connect_database('safe-entry')
         records = db['records']
-        results = records.find({"nric": request.nric, "closeContact": True}, {"_id": 0})
+        results = records.find(
+            {"nric": request.nric, "closeContact": True}, {"_id": 0})
         for i in results:
             i['checkInTime'] = i['checkInTime'].isoformat()
             i['checkOutTime'] = i['checkOutTime'].isoformat(
@@ -123,7 +124,6 @@ class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
             formatted_results.append(i)
         print(formatted_results)
         return safe_entry_pb2.CheckExposureHistoryReply(results=formatted_results)
-
 
 
 class SpecialAccess(safe_entry_pb2_grpc.SpecialAccessServicer):
@@ -199,29 +199,28 @@ def populate() -> None:
 class Notification(safe_entry_pb2_grpc.NotificationServicer):
     mongoDB = MongoDatabase()
     mongoDB.connect()
-    close_contact_records = []
-    old_records = []
+    # close_contact_records = []
+    # old_records = []
     connected = True
 
     async def UnsubscribeNotification(self, request: safe_entry_pb2.UnsubscribeRequest, context) -> safe_entry_pb2.UnsubscribeReply:
         self.connected = False
 
-        #If want to send notification each time user connects, uncomment below.
+        # If want to send notification each time user connects, uncomment below.
         # self.close_contact_records = []
-        
+
         print('unsubscribed notification:', request.nric)
         return safe_entry_pb2.UnsubscribeReply(message='Unsubscribed successfully!')
-
 
     async def SubscribeNotification(self, request: safe_entry_pb2.NotificationRequest, context) -> safe_entry_pb2.NotificationResponse:
 
         time = datetime.now()
         time_delta = time - timedelta(days=14)
-        self.connected = True
+        close_contact_records = []
+        old_records = []
 
-        # infinite while loop
-        while(self.connected):
-            print("Checking records...")
+        while True:
+            print("Checking records for:", request.name, request.nric)
 
             db = self.mongoDB.connect_database('safe-entry')
             records = db['records']
@@ -230,12 +229,12 @@ class Notification(safe_entry_pb2_grpc.NotificationServicer):
             cloned_cursor = all_records.clone()
             all_records_parsed = list(cloned_cursor)
 
-            if self.old_records != all_records_parsed:
+            if old_records != all_records_parsed:
                 for doc in all_records:
                     checkOutTime_parsed = doc['checkOutTime'] = doc['checkOutTime'].isoformat(
                     ) if doc['checkOutTime'] else ''
 
-                    self.close_contact_records.append({
+                    close_contact_records.append({
                         'name': doc["name"],
                         'nric': doc["nric"],
                         'location': doc["location"],
@@ -247,14 +246,12 @@ class Notification(safe_entry_pb2_grpc.NotificationServicer):
                 if all_records_parsed:
                     # test server-sided streaming, will send dummy notification every 10 sec
                     print('sending notification to', request.name)
-                    yield safe_entry_pb2.NotificationResponse(results=self.close_contact_records)
-                    self.close_contact_records.pop()
-            self.old_records = copy.deepcopy(all_records_parsed)
-            
+                    yield safe_entry_pb2.NotificationResponse(results=close_contact_records)
+                    close_contact_records.pop()
+            old_records = copy.deepcopy(all_records_parsed)
+
             # Check for updates every 10 seconds
             await asyncio.sleep(10)
-
-    
 
 
 async def serve() -> None:

@@ -85,6 +85,7 @@ async def checkInHistory(nric):
             # closeContact wont show if false, only shows if true
             print(i)
 
+
 async def checkExposureHistory(nric):
     async with grpc.aio.insecure_channel("localhost:50051") as channel:
         stub = safe_entry_pb2_grpc.SafeEntryStub(channel)
@@ -117,10 +118,11 @@ async def subscribeNotification(name: str, nric: str):
 
             for results in collectedresponse.results:
                 print(f"\nAlert! You, {results.name} ({results.nric}), visited {results.location} on {results.checkInTime} { hyphen if results.checkOutTime else empty_string} {results.checkOutTime if results.checkOutTime else empty_string} which has been marked as a COVID Cluser. Please quarantine for 14 days.\n")
-
+        response.cancel()
         # async for i in response:
         #     # closeContact wont show if false, only shows if true
         #     print(i)
+
 
 async def unsubscribeNotification(nric: str):
     async with grpc.aio.insecure_channel("localhost:50051") as channel:
@@ -160,17 +162,18 @@ async def main():
         if option == 1:
             location = input('Enter your location: ')
             await asyncio.create_task(checkInIndividual(name=name, nric=nric,
-                 location=location))
+                                                        location=location))
         elif option == 2:
             location = input('Enter your location: ')
             await asyncio.create_task(checkOutIndividual(name=name, nric=nric,
-                 location=location))
-            
+                                                         location=location))
+
         elif option == 3:
             groupnames = [name]
             groupnrics = [nric]
             location = input('Enter your location: ')
-            n = int(input('Enter number of people to check in (yourself not included):'))
+            n = int(
+                input('Enter number of people to check in (yourself not included):'))
 
             for i in range(0, n):
                 temp_name = input(f"Enter no. {i} name: ")
@@ -181,13 +184,14 @@ async def main():
             print(f"Checking in...")
 
             await asyncio.create_task(checkInGroup(names=groupnames,
-            nrics=groupnrics, location=location))
-            
+                                                   nrics=groupnrics, location=location))
+
         elif option == 4:
             groupnames = [name]
             groupnrics = [nric]
             location = input('Enter your location: ')
-            n = int(input('Enter number of people to check out (yourself not included):'))
+            n = int(
+                input('Enter number of people to check out (yourself not included):'))
 
             for i in range(0, n):
                 temp_name = input(f"Enter no. {i} name: ")
@@ -198,7 +202,7 @@ async def main():
             print(f"Checking out...")
 
             await asyncio.create_task(checkOutGroup(names=groupnames,
-            nrics=groupnrics, location=location))
+                                                    nrics=groupnrics, location=location))
 
         elif option == 5:
             print("\n================")
@@ -212,7 +216,7 @@ async def main():
             await asyncio.create_task(checkExposureHistory(nric=nric))
         elif option == 7:
             print('Exiting')
-            await asyncio.create_task(unsubscribeNotification(nric=nric))
+            # await asyncio.create_task(unsubscribeNotification(nric=nric))
             stop_threads = True
             exit()
         else:
