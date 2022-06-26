@@ -104,7 +104,8 @@ class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
         formatted_results = []
         db = self.mongoDB.connect_database('safe-entry')
         records = db['records']
-        results = records.find({"nric": request.nric}, {"_id": 0})
+        results = records.find({"nric": request.nric}, {
+                               "_id": 0}).sort('checkInTime', -1)
         for i in results:
             i['checkInTime'] = i['checkInTime'].isoformat()
             i['checkOutTime'] = i['checkOutTime'].isoformat(
@@ -117,7 +118,7 @@ class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
         db = self.mongoDB.connect_database('safe-entry')
         records = db['records']
         results = records.find(
-            {"nric": request.nric, "closeContact": True}, {"_id": 0})
+            {"nric": request.nric, "closeContact": True}, {"_id": 0}).sort('checkInTime', -1)
         for i in results:
             i['checkInTime'] = i['checkInTime'].isoformat()
             i['checkOutTime'] = i['checkOutTime'].isoformat(
@@ -214,17 +215,16 @@ class Notification(safe_entry_pb2_grpc.NotificationServicer):
 
     async def SubscribeNotification(self, request: safe_entry_pb2.NotificationRequest, context) -> safe_entry_pb2.NotificationResponse:
 
-        time = datetime.now()
-        time_delta = time - timedelta(days=14)
-
         while True:
+            time = datetime.now()
+            time_delta = time - timedelta(days=14)
             print("Checking records for:", request.name, request.nric)
 
             records = self.db['records']
             notifications = self.db['notifications']
 
-            all_records = records.find({'checkInTime': {"$gt": time_delta, "$lt": time}, 'nric': {
-                                       "$eq": request.nric}, 'closeContact': {"$eq": True}}, {'_id': 0})
+            all_records = records.find({'checkInTime': {"$gt": time_delta, "$lte": time}, 'nric': {
+                "$eq": request.nric}, 'closeContact': {"$eq": True}}, {'_id': 0})
             cloned_cursor = all_records.clone()
             all_records_parsed = list(cloned_cursor)
             old_records = notifications.find_one(
@@ -260,7 +260,7 @@ class Notification(safe_entry_pb2_grpc.NotificationServicer):
                 '$set': {'notification_records': all_records_parsed}}, upsert=True)
 
             # Check for updates every 10 seconds
-            await asyncio.sleep(10)
+            await asyncio.sleep(2)
 
 
 async def serve() -> None:

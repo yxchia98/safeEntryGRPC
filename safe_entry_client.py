@@ -1,5 +1,7 @@
 import asyncio
 import logging
+from time import strftime
+from datetime import datetime
 
 import grpc
 import safe_entry_pb2
@@ -83,7 +85,13 @@ async def checkInHistory(nric):
         )
         for i in response.results:
             # closeContact wont show if false, only shows if true
-            print(i)
+            inTime = (datetime.fromisoformat(i.checkInTime)
+                      ).strftime('%d %b %Y, %H:%M')
+            outTime = (datetime.fromisoformat(i.checkOutTime)
+                       ).strftime('%d %b %Y, %H:%M') if i.checkOutTime is not None else 'No check-out recorded'
+            closeContact = 'True' if i.closeContact else 'False'
+            print(
+                f"Check-in time: {inTime}\nCheck-out time: {outTime}\nLocation: {i.location}\nClose contact: {closeContact}\n")
 
 
 async def checkExposureHistory(nric):
@@ -95,7 +103,13 @@ async def checkExposureHistory(nric):
         )
         for i in response.results:
             # closeContact wont show if false, only shows if true
-            print(i)
+            inTime = (datetime.fromisoformat(i.checkInTime)
+                      ).strftime('%d %b %Y, %H:%M')
+            outTime = (datetime.fromisoformat(i.checkOutTime)
+                       ).strftime('%d %b %Y, %H:%M') if i.checkOutTime is not None else 'No check-out recorded'
+            closeContact = 'True' if i.closeContact else 'False'
+            print(
+                f"Check-in time: {inTime}\nCheck-out time: {outTime}\nLocation: {i.location}\nClose contact: {closeContact}\n")
 
 
 async def subscribeNotification(name: str, nric: str):
@@ -117,7 +131,7 @@ async def subscribeNotification(name: str, nric: str):
             hyphen = " to "
 
             for results in collectedresponse.results:
-                print(f"\nAlert! You, {results.name} ({results.nric}), visited {results.location} on {results.checkInTime} { hyphen if results.checkOutTime else empty_string} {results.checkOutTime if results.checkOutTime else empty_string} which has been marked as a COVID Cluser. Please quarantine for 14 days.\n")
+                print(f"\nAlert! You, {results.name} ({results.nric}), visited {results.location} on {results.checkInTime} { hyphen if results.checkOutTime else empty_string} {results.checkOutTime if results.checkOutTime else empty_string} which has been marked as a COVID Cluser. Please quarantine for 14 days from the date of visit.\n")
         response.cancel()
         # async for i in response:
         #     # closeContact wont show if false, only shows if true
@@ -176,8 +190,8 @@ async def main():
                 input('Enter number of people to check in (yourself not included):'))
 
             for i in range(0, n):
-                temp_name = input(f"Enter no. {i} name: ")
-                temp_nric = input(f"Enter no. {i} NRIC: ")
+                temp_name = input(f"Enter no. {i+1} name: ")
+                temp_nric = input(f"Enter no. {i+1} NRIC: ")
                 groupnames.append(temp_name)
                 groupnrics.append(temp_nric)
 
@@ -194,8 +208,8 @@ async def main():
                 input('Enter number of people to check out (yourself not included):'))
 
             for i in range(0, n):
-                temp_name = input(f"Enter no. {i} name: ")
-                temp_nric = input(f"Enter no. {i} NRIC: ")
+                temp_name = input(f"Enter no. {i+1} name: ")
+                temp_nric = input(f"Enter no. {i+1} NRIC: ")
                 groupnames.append(temp_name)
                 groupnrics.append(temp_nric)
 
@@ -207,12 +221,12 @@ async def main():
         elif option == 5:
             print("\n================")
             print("Check In History")
-            print("================\n")
+            print(f"================\nName: {name}\nNRIC: {nric}\n")
             await asyncio.create_task(checkInHistory(nric=nric))
         elif option == 6:
             print("\n================")
             print("Exposure History")
-            print("================\n")
+            print(f"================\nName: {name}\nNRIC: {nric}\n")
             await asyncio.create_task(checkExposureHistory(nric=nric))
         elif option == 7:
             print('Exiting')
