@@ -18,7 +18,7 @@ Start gRPC main client:
 python .\safe_entry_client.py
 ```
 
-Start gRPC server:
+Start gRPC special access client:
 
 ```
 python .\special_access_client.py
