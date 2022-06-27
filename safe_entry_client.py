@@ -94,7 +94,7 @@ async def checkInHistory(nric):
                        ).strftime('%d %b %Y, %H:%M') if i.checkOutTime != '' else 'No check-out recorded'
             closeContact = 'True' if i.closeContact else 'False'
             print(
-                f"Check-in time: {inTime}\nCheck-out time: {outTime}\nLocation: {i.location}\nClose contact: {closeContact}\n")
+                f"Location: {i.location}\nCheck-in time: {inTime}\nCheck-out time: {outTime}\nClose contact: {closeContact}\n")
 
 
 async def checkExposureHistory(nric):
@@ -112,7 +112,7 @@ async def checkExposureHistory(nric):
                        ).strftime('%d %b %Y, %H:%M') if i.checkOutTime is not None else 'No check-out recorded'
             closeContact = 'True' if i.closeContact else 'False'
             print(
-                f"Check-in time: {inTime}\nCheck-out time: {outTime}\nLocation: {i.location}\nClose contact: {closeContact}\n")
+                f"Location: {i.location}\nCheck-in time: {inTime}\nCheck-out time: {outTime}\nClose contact: {closeContact}\n")
 
 
 async def subscribeNotification(name: str, nric: str):
@@ -134,22 +134,8 @@ async def subscribeNotification(name: str, nric: str):
             hyphen = " to "
 
             for results in collectedresponse.results:
-                print(f"\nAlert! You, {results.name} ({results.nric}), visited {results.location} on {results.checkInTime} { hyphen if results.checkOutTime else empty_string} {results.checkOutTime if results.checkOutTime else empty_string} which has been marked as a COVID Cluser. Please quarantine for 14 days from the date of visit.\n")
+                print(f"\nAlert! You, {results.name} ({results.nric}), visited {results.location} on {(datetime.fromisoformat(results.checkInTime)).strftime('%d %b %Y, %H:%M')} { hyphen if results.checkOutTime else empty_string} {(datetime.fromisoformat(results.checkOutTime)).strftime('%d %b %Y, %H:%M') if results.checkOutTime else empty_string} which has been marked as a COVID Cluser. Please quarantine for 14 days from the date of visit.\n")
         response.cancel()
-        # async for i in response:
-        #     # closeContact wont show if false, only shows if true
-        #     print(i)
-
-
-# async def unsubscribeNotification(nric: str):
-#     async with grpc.aio.insecure_channel("localhost:50051") as channel:
-#         stub = safe_entry_pb2_grpc.NotificationStub(channel)
-#         response = await stub.UnsubscribeNotification(
-#             safe_entry_pb2.UnsubscribeRequest(
-#                 nric=nric
-#             )
-#         )
-#         print(response)
 
 
 async def subscriptionThreadFunction(name: str, nric: str):

@@ -199,6 +199,19 @@ class SpecialAccess(safe_entry_pb2_grpc.SpecialAccessServicer):
 
         return safe_entry_pb2.MarkClusterReply(status="complete!")
 
+    async def ShowClusters(self, request: safe_entry_pb2.ShowClusterRequest, context: grpc.aio.ServicerContext) -> safe_entry_pb2.ShowClusterReply:
+        db = self.mongoDB.connect_database('safe-entry')
+        clusters_collection = db['clusters']
+        clusterList = []
+        result = clusters_collection.find({}, {'_id': 0}).sort('time', -1)
+        for x in result:
+            doc = {
+                'location': x['location'],
+                'time': x['time'].isoformat()
+            }
+            clusterList.append(doc)
+        return safe_entry_pb2.ShowClusterReply(clusters=clusterList)
+
 
 class Notification(safe_entry_pb2_grpc.NotificationServicer):
     mongoDB = MongoDatabase()

@@ -13,6 +13,7 @@ service SafeEntry {
 
 service SpecialAccess {
     rpc MarkCluster (MarkClusterRequest) returns (MarkClusterReply){}
+    rpc ShowClusters (ShowClusterRequest) returns (ShowClusterReply){}
 }
 service Notification {
     rpc SubscribeNotification (NotificationRequest) returns (stream NotificationResponse){}
@@ -64,6 +65,9 @@ message MarkClusterRequest{
     string time = 3;
 }
 
+message ShowClusterRequest{
+}
+
 // replies
 
 message CheckInIndividualReply {
@@ -94,9 +98,15 @@ message MarkClusterReply{
     string status = 1;
 }
 
+message ShowClusterReply{
+    repeated Cluster clusters = 1;
+}
+
 message NotificationResponse{
     repeated Result results = 1;
 }
+
+
 
 message Result{
     string name = 1;
@@ -105,4 +115,9 @@ message Result{
     string checkInTime = 4;
     string checkOutTime = 5;
     bool closeContact = 6;
+}
+
+message Cluster{
+    string location = 1;
+    string time = 2;
 }

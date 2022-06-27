@@ -245,12 +245,23 @@ class SpecialAccessStub(object):
                 request_serializer=safe__entry__pb2.MarkClusterRequest.SerializeToString,
                 response_deserializer=safe__entry__pb2.MarkClusterReply.FromString,
                 )
+        self.ShowClusters = channel.unary_unary(
+                '/safe_entry.SpecialAccess/ShowClusters',
+                request_serializer=safe__entry__pb2.ShowClusterRequest.SerializeToString,
+                response_deserializer=safe__entry__pb2.ShowClusterReply.FromString,
+                )
 
 
 class SpecialAccessServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def MarkCluster(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ShowClusters(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -263,6 +274,11 @@ def add_SpecialAccessServicer_to_server(servicer, server):
                     servicer.MarkCluster,
                     request_deserializer=safe__entry__pb2.MarkClusterRequest.FromString,
                     response_serializer=safe__entry__pb2.MarkClusterReply.SerializeToString,
+            ),
+            'ShowClusters': grpc.unary_unary_rpc_method_handler(
+                    servicer.ShowClusters,
+                    request_deserializer=safe__entry__pb2.ShowClusterRequest.FromString,
+                    response_serializer=safe__entry__pb2.ShowClusterReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -288,6 +304,23 @@ class SpecialAccess(object):
         return grpc.experimental.unary_unary(request, target, '/safe_entry.SpecialAccess/MarkCluster',
             safe__entry__pb2.MarkClusterRequest.SerializeToString,
             safe__entry__pb2.MarkClusterReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ShowClusters(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/safe_entry.SpecialAccess/ShowClusters',
+            safe__entry__pb2.ShowClusterRequest.SerializeToString,
+            safe__entry__pb2.ShowClusterReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
