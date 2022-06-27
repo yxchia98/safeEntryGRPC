@@ -41,7 +41,7 @@ def populate() -> None:
         for i in range(0, len(names)):
             for j in range(0, randint(1, 100)):
                 inTime = time + \
-                    timedelta(days=randint(1, 30), hours=randint(
+                    timedelta(days=randint(1, 29), hours=randint(
                         0, 8), minutes=randint(0, 60))
                 outTime = inTime + \
                     timedelta(hours=randint(0, 8), minutes=randint(0, 60))
