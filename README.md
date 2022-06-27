@@ -6,19 +6,19 @@ Provision MongoDB container with initial records:
 docker-compose up
 ```
 
-Start gRPC server:
+Start gRPC server (open new terminal):
 
 ```
 python .\safe_entry_server.py
 ```
 
-Start gRPC main client:
+Start gRPC main client (open new terminal):
 
 ```
 python .\safe_entry_client.py
 ```
 
-Start gRPC special access client:
+Start gRPC special access client (open new terminal):
 
 ```
 python .\special_access_client.py
