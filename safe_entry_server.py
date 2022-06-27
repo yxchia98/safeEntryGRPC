@@ -23,7 +23,7 @@ def populate() -> None:
              'Brandon Ong', 'Low Kai Heng', 'Tom Tan']
     nric = ['S1234567A', 'S1234567B', 'S1234567C',
             'S1234567D', 'S1234567E', 'S1234567F']
-    locations = ['AMK Hub', 'Hai Di Lao Sunplaza', 'Yakiniku Like AMK', 'Saizerya Woods Square',
+    locations = ['Sun Plaza', 'AMK Hub', 'Hai Di Lao Sunplaza', 'Yakiniku Like AMK', 'Saizerya Woods Square',
                  'Woodlands MRT', 'SIT @ NYP', 'Yio Chu Kang MRT', 'Takagi Ramen AMK']
 
     time = datetime.now() - timedelta(days=30)
@@ -40,10 +40,12 @@ def populate() -> None:
 
         for i in range(0, len(names)):
             for j in range(0, randint(1, 100)):
-                inTime = time + timedelta(days=randint(0, 30))
+                inTime = time + \
+                    timedelta(days=randint(1, 30), hours=randint(
+                        0, 8), minutes=randint(0, 60))
                 outTime = inTime + \
                     timedelta(hours=randint(0, 8), minutes=randint(0, 60))
-                location = locations[randint(0, 7)]
+                location = locations[randint(0, len(locations)-1)]
                 record_template = {
                     "name": names[i],
                     "nric": nric[i],
