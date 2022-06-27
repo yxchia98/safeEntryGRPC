@@ -3,6 +3,7 @@ import copy
 from email.policy import default
 import logging
 from operator import gt
+from random import randint
 from dateutil import parser
 from sqlite3 import Date
 from tokenize import Special
@@ -18,14 +19,14 @@ from collections import defaultdict
 
 def populate() -> None:
 
-    names = ['Chia Yi Xuan', 'Ooi Jun Kai',
-             'Lim Jun Xian', 'Brandon Ong', 'Low Kai Heng']
+    names = ['Chia Yi Xuan', 'Ooi Jun Kai', 'Lim Jun Xian',
+             'Brandon Ong', 'Low Kai Heng', 'Tom Tan']
     nric = ['S1234567A', 'S1234567B', 'S1234567C',
             'S1234567D', 'S1234567E', 'S1234567F']
-    locations = ['AMK Hub', 'Hai Di Lao', 'Yakiniku', 'Saizerya',
-                 'Woodlands MRT', 'SIT @ NYP', 'Yio Chu Kang MRT']
+    locations = ['AMK Hub', 'Hai Di Lao Sunplaza', 'Yakiniku Like AMK', 'Saizerya Woods Square',
+                 'Woodlands MRT', 'SIT @ NYP', 'Yio Chu Kang MRT', 'Takagi Ramen AMK']
 
-    time = datetime.now()
+    time = datetime.now() - timedelta(days=30)
     mongoDB = MongoDatabase()
     mongoDB.connect()
     db = mongoDB.connect_database('safe-entry')
@@ -36,20 +37,23 @@ def populate() -> None:
     if db_count == 0:
 
         print("Empty records table - populating with some data")
-        count = 0
 
-        for i in names:
-            for j in locations:
+        for i in range(0, len(names)):
+            for j in range(0, randint(1, 100)):
+                inTime = time + timedelta(days=randint(0, 30))
+                outTime = inTime + \
+                    timedelta(hours=randint(0, 8), minutes=randint(0, 60))
+                location = locations[randint(0, 7)]
                 record_template = {
-                    "name": i,
-                    "nric": nric[count],
-                    "location": j,
-                    "checkInTime": time,
-                    "checkOutTime": None,
+                    "name": names[i],
+                    "nric": nric[i],
+                    "location": location,
+                    "checkInTime": inTime,
+                    "checkOutTime": outTime,
                     'closeContact': False,
                 }
                 records.insert_one(record_template)
-            count += 1
+        print('populated!')
 
 
 class SafeEntry(safe_entry_pb2_grpc.SafeEntryServicer):
@@ -208,7 +212,8 @@ class Notification(safe_entry_pb2_grpc.NotificationServicer):
         while True:
             time = datetime.now()
             time_delta = time - timedelta(days=14)
-            print("Checking records for:", request.name, request.nric)
+            print("Checking new notifications for:",
+                  request.name, request.nric)
 
             records = self.db['records']
             notifications = self.db['notifications']
@@ -250,7 +255,7 @@ class Notification(safe_entry_pb2_grpc.NotificationServicer):
                 '$set': {'notification_records': all_records_parsed}}, upsert=True)
 
             # Check for updates every 10 seconds
-            await asyncio.sleep(2)
+            await asyncio.sleep(10)
 
 
 async def serve() -> None:

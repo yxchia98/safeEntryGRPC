@@ -24,6 +24,9 @@ menu_options = {
 
 
 def print_menu():
+    print("\n================")
+    print("SafeEntry Client")
+    print("================")
     for key in menu_options.keys():
         print(key, '--', menu_options[key])
 
@@ -37,7 +40,7 @@ async def checkInIndividual(name: str, nric: str, location: str):
                 nric=nric,
                 location=location)
         )
-        print(response)
+        print(response.status)
 
 
 async def checkOutIndividual(name: str, nric: str, location: str):
@@ -49,7 +52,7 @@ async def checkOutIndividual(name: str, nric: str, location: str):
                 nric=nric,
                 location=location)
         )
-        print(response)
+        print(response.status)
 
 
 async def checkInGroup(names: list[str], nrics: list[str], location: str):
@@ -61,7 +64,7 @@ async def checkInGroup(names: list[str], nrics: list[str], location: str):
                 nrics=nrics,
                 location=location)
         )
-        print(response)
+        print(response.status)
 
 
 async def checkOutGroup(names: list[str], nrics: list[str], location: str):
@@ -73,7 +76,7 @@ async def checkOutGroup(names: list[str], nrics: list[str], location: str):
                 nrics=nrics,
                 location=location)
         )
-        print(response)
+        print(response.status)
 
 
 async def checkInHistory(nric):
@@ -88,7 +91,7 @@ async def checkInHistory(nric):
             inTime = (datetime.fromisoformat(i.checkInTime)
                       ).strftime('%d %b %Y, %H:%M')
             outTime = (datetime.fromisoformat(i.checkOutTime)
-                       ).strftime('%d %b %Y, %H:%M') if i.checkOutTime is not None else 'No check-out recorded'
+                       ).strftime('%d %b %Y, %H:%M') if i.checkOutTime != '' else 'No check-out recorded'
             closeContact = 'True' if i.closeContact else 'False'
             print(
                 f"Check-in time: {inTime}\nCheck-out time: {outTime}\nLocation: {i.location}\nClose contact: {closeContact}\n")
@@ -175,10 +178,12 @@ async def main():
             print('Wrong input. Please enter a number ...')
         if option == 1:
             location = input('Enter your location: ')
+            print(f"Checking in...")
             await asyncio.create_task(checkInIndividual(name=name, nric=nric,
                                                         location=location))
         elif option == 2:
             location = input('Enter your location: ')
+            print(f"Checking out...")
             await asyncio.create_task(checkOutIndividual(name=name, nric=nric,
                                                          location=location))
 
@@ -214,7 +219,6 @@ async def main():
                 groupnrics.append(temp_nric)
 
             print(f"Checking out...")
-
             await asyncio.create_task(checkOutGroup(names=groupnames,
                                                     nrics=groupnrics, location=location))
 
