@@ -41,6 +41,7 @@ async def checkInIndividual(name: str, nric: str, location: str):
                 location=location)
         )
         print(response.status)
+        return response.status
 
 
 async def checkOutIndividual(name: str, nric: str, location: str):
@@ -53,6 +54,7 @@ async def checkOutIndividual(name: str, nric: str, location: str):
                 location=location)
         )
         print(response.status)
+        return response.status
 
 
 async def checkInGroup(names: list[str], nrics: list[str], location: str):
@@ -65,6 +67,7 @@ async def checkInGroup(names: list[str], nrics: list[str], location: str):
                 location=location)
         )
         print(response.status)
+        return response.status
 
 
 async def checkOutGroup(names: list[str], nrics: list[str], location: str):
@@ -77,6 +80,7 @@ async def checkOutGroup(names: list[str], nrics: list[str], location: str):
                 location=location)
         )
         print(response.status)
+        return response.status
 
 
 async def checkInHistory(nric):

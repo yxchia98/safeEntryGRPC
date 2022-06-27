@@ -7,19 +7,20 @@ import asyncio
 
 class CheckIns(IsolatedAsyncioTestCase):
     async def test_single_checkin(self):
-
         name = "Chee Cheong Fan"
         nric = "S9876543O"
         location = "East Coast Park"
 
-        await asyncio.create_task(checkInIndividual(name=name, nric=nric, location=location))
+        response = await asyncio.create_task(checkInIndividual(name=name, nric=nric, location=location))
+        self.assertEqual("Individual check-in success", response)
 
     async def test_group_checkin(self):
         group_names = ["Dim Sum", "Har Gao"]
         group_nrics = ["S9876543I", "S9876543U"]
         location = "East Coast Park"
 
-        await asyncio.create_task(checkInGroup(names=group_names, nrics=group_nrics, location=location))
+        response = await asyncio.create_task(checkInGroup(names=group_names, nrics=group_nrics, location=location))
+        self.assertEqual("Group check-in success", response)
 
     async def test_single_checkout(self):
 
@@ -27,14 +28,16 @@ class CheckIns(IsolatedAsyncioTestCase):
         nric = "S9876543O"
         location = "East Coast Park"
 
-        await asyncio.create_task(checkOutIndividual(name=name, nric=nric, location=location))
+        response = await asyncio.create_task(checkOutIndividual(name=name, nric=nric, location=location))
+        self.assertEqual("Individual check-out success", response)
 
     async def test_group_checkout(self):
         group_names = ["Dim Sum", "Har Gao"]
         group_nrics = ["S9876543I", "S9876543U"]
         location = "East Coast Park"
 
-        await asyncio.create_task(checkOutGroup(names=group_names, nrics=group_nrics, location=location))
+        response = await asyncio.create_task(checkOutGroup(names=group_names, nrics=group_nrics, location=location))
+        self.assertEqual("Group check-out success", response)
 
 
 class History(IsolatedAsyncioTestCase):
@@ -54,7 +57,9 @@ class MarkCluster(IsolatedAsyncioTestCase):
         location = "East Coast Park"
         date = "06/06/2022"
         time = "12:34"
-        await asyncio.create_task(markCluster(location=location, date=date, time=time))
+        response = await asyncio.create_task(markCluster(location=location, date=date, time=time))
+        self.assertEqual("complete!", response)
+
 
     async def test_show_clusters(self):
         await asyncio.create_task(showClusters())

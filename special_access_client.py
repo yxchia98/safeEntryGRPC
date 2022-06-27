@@ -32,6 +32,7 @@ async def markCluster(location: str, date: str, time: str):
                 time=time)
         )
         print(f"Mark cluster {location}, {date}, {time}, {response.status}")
+        return response.status
 
 
 async def showClusters():
